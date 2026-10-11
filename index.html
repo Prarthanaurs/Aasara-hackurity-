@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  index.html — Aasara Welcome & Language Selection Screen
+  --------------------------------------------------------
+  Voice features added:
+  1. A visible "Welcome Guide" box with a 🔊 Read Aloud button
+     that reads the full instructions in clear English.
+  2. Each language button reads its own name aloud when hovered/focused
+     (e.g. hovering Kannada says "ಕನ್ನಡ — Kannada").
+  3. Clicking a language button confirms the selection by voice
+     (e.g. "English selected. Press Continue to proceed.").
+  4. On page load, a short auto-play guide fires after the first
+     user gesture (click anywhere), because browsers require at least
+     one user action before allowing speech.
+  5. Stop button cancels speech at any time.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — ಆಸರೆ | Welcome</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Skip-to-main link for keyboard / screen-reader users -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <main id="main-content">
+    <div class="lang-screen">
+
+      <!-- ================================================================
+           Logo / brand block
+           ================================================================ -->
+      <div class="logo-block" role="banner">
+        <div class="logo-name" aria-label="Aasara">Aasara</div>
+        <div class="logo-script" aria-hidden="true">ಆಸರೆ</div>
+        <p class="logo-tagline" data-i18n="welcome_tagline">
+          Digital Payment &amp; Safety Assistant for Older Adults
+        </p>
+      </div>
+
+      <!-- ================================================================
+           Welcome Guide Bar
+           A friendly, visible instruction box with a Read Aloud button.
+           The guide text is also spoken automatically on first interaction.
+           ================================================================ -->
+      <div class="welcome-guide-bar" role="region" aria-label="Voice guide">
+        <span class="guide-icon" aria-hidden="true">🔊</span>
+
+        <p class="guide-text" id="guide-text">
+          Welcome to Aasara!
+          Please tap one of the four buttons below to choose your language.
+          Each button will say the language name when you hover or tap it.
+          After choosing, press the <strong>Continue</strong> button to begin.
+        </p>
+
+        <button
+          class="guide-read-btn"
+          id="btn-read-guide"
+          aria-label="Read the welcome guide aloud"
+          title="Read aloud"
+        >
+          🔊 Read
+        </button>
+      </div>
+
+      <!-- ================================================================
+           Language selection
+           ================================================================ -->
+      <section aria-labelledby="lang-heading">
+        <h2 id="lang-heading" data-i18n="choose_language">
+          Please choose your language to continue
+        </h2>
+
+        <div class="lang-buttons" role="group" aria-label="Language selection">
+
+          <!--
+            Each button carries:
+              data-lang       — language code (en / kn / hi / te)
+              data-speak-name — what the voice says when this button is hovered/focused
+              data-speak-sel  — confirmation phrase spoken when this button is selected
+          -->
+
+          <button
+            class="lang-btn"
+            data-lang="en"
+            data-speak-name="English"
+            data-speak-sel="English selected. Press Continue to proceed."
+            aria-pressed="false"
+          >
+            <span class="lang-native">English</span>
+            <span class="lang-english">English</span>
+            <span class="lang-speaker" aria-hidden="true">🔊</span>
+          </button>
+
+          <button
+            class="lang-btn"
+            data-lang="kn"
+            data-speak-name="ಕನ್ನಡ — Kannada"
+            data-speak-sel="Kannada selected. Press Continue to proceed."
+            aria-pressed="false"
+          >
+            <span class="lang-native">ಕನ್ನಡ</span>
+            <span class="lang-english">Kannada</span>
+            <span class="lang-speaker" aria-hidden="true">🔊</span>
+          </button>
+
+          <button
+            class="lang-btn"
+            data-lang="hi"
+            data-speak-name="हिंदी — Hindi"
+            data-speak-sel="Hindi selected. Press Continue to proceed."
+            aria-pressed="false"
+          >
+            <span class="lang-native">हिंदी</span>
+            <span class="lang-english">Hindi</span>
+            <span class="lang-speaker" aria-hidden="true">🔊</span>
+          </button>
+
+          <button
+            class="lang-btn"
+            data-lang="te"
+            data-speak-name="తెలుగు — Telugu"
+            data-speak-sel="Telugu selected. Press Continue to proceed."
+            aria-pressed="false"
+          >
+            <span class="lang-native">తెలుగు</span>
+            <span class="lang-english">Telugu</span>
+            <span class="lang-speaker" aria-hidden="true">🔊</span>
+          </button>
+
+        </div><!-- /.lang-buttons -->
+
+        <!-- Hint text -->
+        <p class="hint" data-i18n="lang_hint">
+          You can change the language again at any time.
+        </p>
+
+        <!-- Continue button (disabled until a language is chosen) -->
+        <div style="text-align:center;">
+          <button
+            id="btn-continue"
+            class="btn btn-primary"
+            disabled
+            aria-disabled="true"
+            data-i18n="btn_continue"
+          >
+            Continue →
+          </button>
+        </div>
+
+        <!-- Stop button — always visible, cancels speech immediately -->
+        <div style="text-align:center; margin-top: var(--space-md);">
+          <button
+            id="btn-stop"
+            class="btn btn-ghost"
+            aria-label="Stop speaking"
+            style="min-height:44px; padding: 8px 20px; font-size: var(--font-size-sm);"
+          >
+            ⏹ Stop Speaking
+          </button>
+        </div>
+
+        <!-- Voice status line (shows "Speaking…" or error notices) -->
+        <p
+          id="voice-status-inline"
+          role="status"
+          aria-live="polite"
+          style="text-align:center; margin-top:var(--space-sm); font-size:var(--font-size-sm); color:var(--color-muted); min-height:1.4em;"
+        ></p>
+
+      </section>
+
+    </div><!-- /.lang-screen -->
+  </main>
+
+  <!-- ======================================================================
+       Scripts
+       languages.js must load first, then voice.js, then the inline script.
+       ====================================================================== -->
+  <script src="js/languages.js"></script>
+  <script src="js/voice.js"></script>
+  <script>
+    /*
+     * index.html inline script
+     * ------------------------
+     * Wires up:
+     *   - Language button clicks  → selectLanguage() → speak selection confirmation
+     *   - Language button hover   → speak the language name
+     *   - Language button focus   → speak the language name (keyboard users)
+     *   - Read Guide button       → speak the full welcome guide
+     *   - Stop button             → cancel any speech
+     *   - Continue button         → save language + navigate to home.html
+     *   - First user gesture      → auto-read welcome guide once
+     */
+
+    // ── State ────────────────────────────────────────────────────────────────
+    let selectedLang       = null;
+    let autoReadDone       = false;   // true after we auto-read the guide once
+    let lastHoveredLang    = null;    // avoid re-speaking on micro-movements
+
+    // ── Elements ─────────────────────────────────────────────────────────────
+    const langButtons   = document.querySelectorAll('.lang-btn');
+    const continueBtn   = document.getElementById('btn-continue');
+    const stopBtn       = document.getElementById('btn-stop');
+    const readGuideBtn  = document.getElementById('btn-read-guide');
+    const statusLine    = document.getElementById('voice-status-inline');
+
+    // ── Voice support check ───────────────────────────────────────────────────
+    const voiceSupport = isSpeechSupported();   // from voice.js
+
+    if (!voiceSupport.synthesis) {
+      // Hide speaker icons and show a notice if synthesis is unavailable
+      document.querySelectorAll('.lang-speaker').forEach(el => el.style.display = 'none');
+      readGuideBtn.textContent = '⚠️ Voice not available';
+      readGuideBtn.disabled = true;
+      setStatus('Voice synthesis is not supported in this browser.');
+    }
+
+    // ── 1. Restore previous selection (if user navigated back) ───────────────
+    const saved = sessionStorage.getItem('aasara_lang');
+    if (saved) {
+      selectLanguage(saved, /* silent = */ true);
+    }
+
+    // ── 2. Language button — CLICK → select + confirm aloud ──────────────────
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectLanguage(btn.dataset.lang, /* silent = */ false);
+      });
+
+      // 3. HOVER → speak language name (desktop mice)
+      btn.addEventListener('mouseenter', () => {
+        if (btn.dataset.lang === lastHoveredLang) return;   // avoid repeat
+        lastHoveredLang = btn.dataset.lang;
+        speakLangName(btn);
+      });
+
+      // 4. FOCUS → speak language name (keyboard Tab navigation)
+      btn.addEventListener('focus', () => {
+        speakLangName(btn);
+      });
+
+      // Reset hover tracker when mouse leaves the button area
+      btn.addEventListener('mouseleave', () => {
+        lastHoveredLang = null;
+      });
+    });
+
+    // ── 5. Read Guide button ──────────────────────────────────────────────────
+    readGuideBtn.addEventListener('click', () => {
+      readWelcomeGuide();
+    });
+
+    // ── 6. Stop button ────────────────────────────────────────────────────────
+    stopBtn.addEventListener('click', () => {
+      stopSpeaking();   // from voice.js
+      setStatus('');
+    });
+
+    // ── 7. Continue button ────────────────────────────────────────────────────
+    continueBtn.addEventListener('click', () => {
+      if (selectedLang) {
+        setLanguage(selectedLang);
+        window.location.href = 'home.html';
+      }
+    });
+
+    // ── 8. Auto-read guide on first user interaction ──────────────────────────
+    //
+    // Browsers block speech until the user has interacted with the page at
+    // least once. We listen for the first click/keydown anywhere on the page,
+    // then read the guide — but only once per page load.
+    //
+    document.addEventListener('click', _autoReadOnce, { once: true });
+    document.addEventListener('keydown', _autoReadOnce, { once: true });
+
+    function _autoReadOnce() {
+      if (autoReadDone) return;
+      autoReadDone = true;
+      // Short delay so the triggered click-event target is processed first
+      setTimeout(readWelcomeGuide, 350);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Helper functions
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /**
+     * Visually select a language button and (optionally) speak its confirmation.
+     *
+     * @param {string}  lang    - 'en' | 'kn' | 'hi' | 'te'
+     * @param {boolean} silent  - if true, do not speak (used for restoring saved state)
+     */
+    function selectLanguage(lang, silent) {
+      selectedLang = lang;
+
+      // Highlight the chosen button
+      langButtons.forEach(btn => {
+        const isChosen = btn.dataset.lang === lang;
+        btn.classList.toggle('selected', isChosen);
+        btn.setAttribute('aria-pressed', isChosen ? 'true' : 'false');
+      });
+
+      // Enable Continue
+      continueBtn.disabled = false;
+      continueBtn.setAttribute('aria-disabled', 'false');
+
+      // Translate visible text into the selected language immediately
+      setLanguage(lang);
+      applyLanguage();
+
+      // Speak the selection confirmation
+      if (!silent && voiceSupport.synthesis) {
+        const chosenBtn = document.querySelector('.lang-btn[data-lang="' + lang + '"]');
+        if (chosenBtn) {
+          const phrase = chosenBtn.getAttribute('data-speak-sel');
+          speakStringEN(phrase);   // always confirm in English so user understands
+
+          // Pulse animation
+          chosenBtn.classList.remove('speaking');
+          void chosenBtn.offsetWidth;  // trigger reflow to restart animation
+          chosenBtn.classList.add('speaking');
+          setTimeout(() => chosenBtn.classList.remove('speaking'), 1800);
+        }
+      }
+    }
+
+    /**
+     * Speak a language button's name when hovered or focused.
+     * Uses English to ensure the user understands it even before they pick.
+     *
+     * @param {HTMLElement} btn
+     */
+    function speakLangName(btn) {
+      if (!voiceSupport.synthesis) return;
+      const phrase = btn.getAttribute('data-speak-name');
+      if (phrase) speakStringEN(phrase);
+    }
+
+    /**
+     * Read the full welcome guide aloud in English.
+     * This is always in English because the user has not yet chosen a language.
+     */
+    function readWelcomeGuide() {
+      if (!voiceSupport.synthesis) {
+        setStatus('Voice synthesis is not available in this browser.');
+        return;
+      }
+
+      const guideEl = document.getElementById('guide-text');
+      // Strip HTML tags to get plain text
+      const plainText = guideEl ? guideEl.innerText : '';
+
+      const fullGuide =
+        'Welcome to Aasara — your Digital Payment and Safety Assistant. ' +
+        'This app is designed to help older adults use digital payments safely. ' +
+        'Please tap one of the four buttons to choose your language. ' +
+        'You can choose English, Kannada, Hindi, or Telugu. ' +
+        'Each button will say the language name when you hover or tap it. ' +
+        'After choosing a language, press the Continue button to begin. ' +
+        'You can press the Stop Speaking button at any time to stop the voice.';
+
+      setStatus('Speaking…');
+
+      // Use the raw speak function from voice.js
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(fullGuide);
+      // Always English for the welcome guide (language not chosen yet)
+      const voices = window.speechSynthesis.getVoices();
+      const engVoice = voices.find(v => v.lang.startsWith('en')) || null;
+      if (engVoice) utterance.voice = engVoice;
+      utterance.lang   = 'en-IN';
+      utterance.rate   = 0.88;   // slightly slower for older adults
+      utterance.pitch  = 1.0;
+      utterance.onend  = () => setStatus('');
+      utterance.onerror = () => setStatus('');
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    /**
+     * Speak a short English string immediately (cancels current speech first).
+     * Used for button-hover and selection confirmations.
+     *
+     * @param {string} text
+     */
+    function speakStringEN(text) {
+      window.speechSynthesis.cancel();
+
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang  = 'en-IN';
+      u.rate  = 0.92;
+      u.pitch = 1.0;
+
+      // Try to use an English voice for clarity
+      const voices = window.speechSynthesis.getVoices();
+      const eng = voices.find(v => v.lang.startsWith('en'));
+      if (eng) u.voice = eng;
+
+      window.speechSynthesis.speak(u);
+    }
+
+    /**
+     * Update the inline status line below the buttons.
+     * @param {string} msg
+     */
+    function setStatus(msg) {
+      if (statusLine) statusLine.textContent = msg;
+    }
+
+    /*
+     * Chrome loads the voice list asynchronously.
+     * voiceschanged fires when they are ready — nothing to do here,
+     * but the event ensures speakStringEN finds voices on next call.
+     */
+    if (typeof window.speechSynthesis !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = () => {};
+    }
+  </script>
+
+</body>
+</html>

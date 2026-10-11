@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  payment.html — Guided Payment Demo
+  -----------------------------------
+  A 3-step simulated payment flow for demonstration purposes.
+  No real money is moved. No bank or UPI connection is made.
+  Pins, OTPs, and passwords are never requested.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Guided Payment</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Navigation bar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
+    <span class="spacer"></span>
+    <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
+  </nav>
+
+  <main id="main-content" class="container" style="padding-top: var(--space-lg);">
+
+    <h1 class="page-title" data-i18n="payment_title">Guided Payment</h1>
+
+    <!-- Step progress indicator -->
+    <div class="step-indicator" aria-label="Payment steps" role="list">
+      <div class="step-dot active" id="dot-1" role="listitem" aria-label="Step 1">1</div>
+      <div class="step-line"       id="line-1"></div>
+      <div class="step-dot"        id="dot-2" role="listitem" aria-label="Step 2">2</div>
+      <div class="step-line"       id="line-2"></div>
+      <div class="step-dot"        id="dot-3" role="listitem" aria-label="Step 3">3</div>
+    </div>
+
+    <!-- ===================================================================
+         STEP 1 — Choose recipient
+         =================================================================== -->
+    <section class="payment-step active card" id="step-1" aria-labelledby="step1-heading">
+
+      <h2 id="step1-heading" data-i18n="step1_heading">Step 1 — Choose Recipient</h2>
+      <p  data-i18n="step1_instruction">Select who you want to send money to.</p>
+
+      <!-- Suspicious-recipient warning (hidden by default) -->
+      <div
+        id="warn-suspicious"
+        class="alert alert-warning"
+        role="alert"
+        style="display:none;"
+        data-i18n="warn_suspicious"
+      ></div>
+
+      <div class="form-group" style="margin-top: var(--space-md);">
+        <label for="recipient-select" data-i18n="label_recipient">Recipient</label>
+        <select id="recipient-select" aria-label="Choose a demo recipient"></select>
+      </div>
+
+      <!-- Name field with 🎤 voice input button -->
+      <div class="form-group">
+        <label for="recipient-text" data-i18n="label_or_enter">Or type a name:</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input
+            type="text"
+            id="recipient-text"
+            data-i18n-placeholder="placeholder_recipient"
+            placeholder="Type recipient name"
+            autocomplete="off"
+            maxlength="80"
+            style="flex:1;"
+          />
+          <button
+            type="button"
+            id="mic-name"
+            class="btn btn-ghost"
+            style="min-height:48px; padding:0 14px; font-size:20px;"
+            aria-label="Speak recipient name"
+            title="Speak name"
+          >🎤</button>
+        </div>
+      </div>
+
+      <!-- Phone number field with 🎤 voice input button -->
+      <div class="form-group">
+        <label for="recipient-phone" data-i18n="label_phone">Phone (demo only)</label>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <input
+            type="tel"
+            id="recipient-phone"
+            placeholder="e.g. 98765-43210"
+            maxlength="15"
+            inputmode="tel"
+            style="flex:1;"
+          />
+          <button
+            type="button"
+            id="mic-phone"
+            class="btn btn-ghost"
+            style="min-height:48px; padding:0 14px; font-size:20px;"
+            aria-label="Speak phone number"
+            title="Speak phone number"
+          >🎤</button>
+        </div>
+        <!-- UPI PIN safety notice — always visible on this step -->
+        <p style="font-size:var(--font-size-sm); color:var(--color-danger); margin-top:6px; font-weight:600;">
+          🔒 <span data-i18n="pin_never_ask">Never share your UPI PIN or OTP with anyone.</span>
+        </p>
+      </div>
+
+      <!-- Validation error (hidden by default) -->
+      <div id="err-recipient" class="field-error" role="alert" style="display:none;"></div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="nextStep()" data-i18n="btn_next">Next →</button>
+        <button class="btn btn-ghost"   onclick="cancelPayment()" data-i18n="btn_cancel">✖ Cancel</button>
+      </div>
+
+    </section><!-- /#step-1 -->
+
+    <!-- ===================================================================
+         STEP 2 — Enter amount
+         =================================================================== -->
+    <section class="payment-step card" id="step-2" aria-labelledby="step2-heading">
+
+      <h2 id="step2-heading" data-i18n="step2_heading">Step 2 — Enter Amount</h2>
+      <p  data-i18n="step2_instruction">How much money do you want to send? (in Rupees)</p>
+
+      <div class="form-group" style="margin-top: var(--space-md);">
+        <label for="amount-input" data-i18n="label_amount">Amount (₹)</label>
+        <input
+          type="number"
+          id="amount-input"
+          min="1"
+          max="999999"
+          data-i18n-placeholder="placeholder_amount"
+          placeholder="e.g. 500"
+          inputmode="numeric"
+          aria-describedby="err-amount"
+        />
+      </div>
+
+      <!-- Validation error -->
+      <div id="err-amount" class="field-error" role="alert" style="display:none;"></div>
+
+      <!-- Large-amount warning (hidden by default) -->
+      <div
+        id="warn-large-amount"
+        class="alert alert-warning"
+        role="alert"
+        style="display:none;"
+        data-i18n="warn_large_amount"
+      >
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="nextStep()"    data-i18n="btn_next">Next →</button>
+        <button class="btn btn-ghost"   onclick="prevStep()"    data-i18n="btn_back">← Back</button>
+        <button class="btn btn-ghost"   onclick="cancelPayment()" data-i18n="btn_cancel">✖ Cancel</button>
+      </div>
+
+    </section><!-- /#step-2 -->
+
+    <!-- ===================================================================
+         STEP 3 — Review & Confirm
+         =================================================================== -->
+    <section class="payment-step card" id="step-3" aria-labelledby="step3-heading">
+
+      <h2 id="step3-heading" data-i18n="step3_heading">Step 3 — Review &amp; Confirm</h2>
+      <p  data-i18n="step3_instruction">Please check the details carefully before confirming.</p>
+
+      <!-- Review box — filled by payment.js -->
+      <div class="review-box" aria-live="polite">
+        <p id="review-sending-label" style="color: var(--color-muted); margin-bottom: var(--space-sm);">
+          <!-- e.g. "Sending ₹500 to Anita Sharma (Demo)" — filled by JS -->
+        </p>
+        <div class="review-amount"    id="review-amount"></div>
+        <div class="review-recipient" id="review-recipient"></div>
+        <p  style="margin-top: var(--space-sm);" id="review-question" data-i18n="review_question">Is this correct?</p>
+      </div>
+
+      <div class="btn-group">
+        <!--
+          Confirm button calls confirmPayment() in payment.js.
+          Voice commands CANNOT trigger this button — user must click it.
+        -->
+        <button
+          class="btn btn-success"
+          onclick="confirmPayment()"
+          data-i18n="btn_confirm"
+          aria-label="Confirm the simulated payment"
+        >
+          ✅ Confirm
+        </button>
+        <button class="btn btn-ghost"   onclick="prevStep()"      data-i18n="btn_change">✏️ Change</button>
+        <button class="btn btn-danger"  onclick="cancelPayment()" data-i18n="btn_cancel">✖ Cancel</button>
+      </div>
+
+    </section><!-- /#step-3 -->
+
+    <!-- ===================================================================
+         RESULT SCREEN (shown after Confirm; hidden initially)
+         =================================================================== -->
+    <section
+      id="payment-result"
+      class="result-box"
+      style="display:none;"
+      aria-labelledby="result-heading"
+      aria-live="polite"
+    >
+      <!--
+        RED DEMO BANNER — always visible on the result screen.
+        This makes it unmistakably clear that no real transaction occurred.
+      -->
+      <div class="demo-banner" data-i18n="result_banner">
+        ⚠️ DEMONSTRATION ONLY — No real money has been transferred
+      </div>
+
+      <h2 id="result-heading" data-i18n="result_heading">Simulated Payment Complete</h2>
+
+      <div class="card" style="max-width: 480px; margin: var(--space-lg) auto; text-align:left;">
+        <table style="width:100%; border-collapse:collapse; font-size: var(--font-size-base);">
+          <tr>
+            <td style="padding: 10px 0; color: var(--color-muted); width:45%;" data-i18n="label_recipient">Recipient</td>
+            <td style="padding: 10px 0; font-weight:700;" id="result-recipient"></td>
+          </tr>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding: 10px 0; color: var(--color-muted);" data-i18n="label_amount">Amount (₹)</td>
+            <td style="padding: 10px 0; font-weight:700; color: var(--color-primary); font-size: var(--font-size-xl);" id="result-amount"></td>
+          </tr>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding: 10px 0; color: var(--color-muted);" data-i18n="result_ref_label">Demo Ref.</td>
+            <td style="padding: 10px 0; font-weight:700;" id="result-ref"></td>
+          </tr>
+          <tr style="border-top:1px solid var(--color-border);">
+            <td style="padding: 10px 0; color: var(--color-muted);" data-i18n="result_status_label">Status</td>
+            <td style="padding: 10px 0; font-weight:700; color: var(--color-accent);" data-i18n="result_status_value">✅ Simulated Success</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Reminder to use official app for real payments -->
+      <div class="alert alert-warning" style="max-width:600px; margin: 0 auto var(--space-lg);">
+        <strong>Remember:</strong>
+        <span data-i18n="result_reminder">
+          To make a real payment, use your official UPI app (BHIM, PhonePe, GPay)
+          and verify all details yourself.
+        </span>
+      </div>
+
+      <button class="btn btn-primary" onclick="window.location.href='home.html'" data-i18n="btn_home">
+        Return to Home
+      </button>
+
+    </section><!-- /#payment-result -->
+
+  </main>
+
+  <!-- =====================================================================
+       Scripts
+       ===================================================================== -->
+  <script src="js/languages.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/payment.js"></script>
+  <script>
+    /*
+     * payment.html inline script
+     * --------------------------
+     * Applies language, injects voice bar, and starts the payment module.
+     */
+    applyLanguage();
+    injectVoiceBar();
+    initPayment();
+
+    // Voice commands on this page
+    startListening({
+      'go back':  () => history.back(),
+      'back':     () => prevStep(),
+      'cancel':   () => cancelPayment(),
+      'next':     () => nextStep(),
+      'home':     () => window.location.href = 'home.html',
+      'repeat':   () => readCurrentStep(),
+    });
+  </script>
+
+</body>
+</html>

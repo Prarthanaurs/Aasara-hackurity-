@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  awareness.html — Awareness Lessons
+  -------------------------------------
+  Three interactive lessons about UPI, payment verification and scam spotting.
+  Each lesson has multiple slides and ends with a short 2-question quiz.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Awareness Lessons</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
+    <span class="spacer"></span>
+    <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
+  </nav>
+
+  <main id="main-content" class="container" style="padding-top: var(--space-lg);">
+
+    <h1 class="page-title" data-i18n="awareness_title">Awareness Lessons</h1>
+
+    <!--
+      Lesson menu buttons — injected by safety.js (initAwareness)
+    -->
+    <div
+      id="lesson-menu"
+      class="btn-group"
+      role="tablist"
+      aria-label="Choose a lesson"
+      style="margin-bottom: var(--space-lg);"
+    >
+      <!-- Buttons inserted by JS -->
+    </div>
+
+    <!--
+      Slide area — current slide content is rendered here by safety.js.
+      aria-live="polite" means screen readers announce content changes.
+    -->
+    <div id="slide-area" aria-live="polite">
+      <!-- Slide content inserted by JS -->
+    </div>
+
+  </main>
+
+  <script src="js/languages.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/safety.js"></script>
+  <script>
+    applyLanguage();
+    injectVoiceBar();
+    initAwareness();
+
+    // Voice commands
+    startListening({
+      'next':    () => nextSlide && nextSlide(),
+      'back':    () => prevSlide && prevSlide(),
+      'home':    () => window.location.href = 'home.html',
+      'go back': () => window.location.href = 'home.html',
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,994 @@
+/*
+ * style.css — Aasara (ಆಸರೆ)
+ * ---------------------------
+ * Shared styles for every page.
+ *
+ * HOW THIS FILE IS ORGANIZED
+ * --------------------------
+ * 1. CSS custom properties (variables) — colours, fonts, spacing
+ * 2. Reset / base styles
+ * 3. Typography
+ * 4. Layout utilities
+ * 5. Navigation bar
+ * 6. Buttons
+ * 7. Cards
+ * 8. Forms
+ * 9. Alert / notice boxes
+ * 10. Voice bar (floating)
+ * 11. Language-selector screen (index.html)
+ * 12. Dashboard (home.html)
+ * 13. Payment flow (payment.html)
+ * 14. Safety & awareness pages
+ * 15. Volunteer page
+ * 16. Responsive (mobile-first adjustments)
+ * 17. Focus / accessibility overrides
+ */
+
+/* =========================================================================
+   1. CUSTOM PROPERTIES (design tokens)
+   ========================================================================= */
+
+:root {
+  /* Colours */
+  --color-bg:          #ffffff;
+  --color-surface:     #f4f7fb;
+  --color-border:      #d0d7e2;
+  --color-text:        #1a1f2e;
+  --color-muted:       #5a6478;
+  --color-primary:     #1a56a8;   /* main brand blue */
+  --color-primary-dk:  #134090;   /* hover state */
+  --color-accent:      #0e8a4f;   /* green for success / confirm */
+  --color-accent-dk:   #0a6e3e;
+  --color-danger:      #c0392b;   /* red for warnings */
+  --color-danger-bg:   #fdf3f2;
+  --color-warning:     #b8660a;
+  --color-warning-bg:  #fef9ec;
+  --color-success-bg:  #edfaf2;
+  --color-lang-hi:     #f5e4c5;   /* soft highlight for language buttons */
+
+  /* Typography */
+  --font-family:       -apple-system, "Segoe UI", system-ui, Arial, sans-serif;
+  --font-size-base:    18px;
+  --font-size-sm:      15px;
+  --font-size-lg:      22px;
+  --font-size-xl:      28px;
+  --font-size-hero:    36px;
+  --line-height:       1.65;
+
+  /* Spacing */
+  --space-xs:  6px;
+  --space-sm:  12px;
+  --space-md:  20px;
+  --space-lg:  32px;
+  --space-xl:  48px;
+
+  /* Borders */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 10px rgba(0,0,0,0.08);
+  --shadow-btn:  0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* =========================================================================
+   2. RESET / BASE
+   ========================================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: var(--font-size-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  line-height: var(--line-height);
+  min-height: 100vh;
+  /* Space at the bottom so content is never hidden behind the voice bar */
+  padding-bottom: 90px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--color-primary-dk);
+}
+
+/* =========================================================================
+   3. TYPOGRAPHY
+   ========================================================================= */
+
+h1 { font-size: var(--font-size-hero); font-weight: 700; line-height: 1.2; }
+h2 { font-size: var(--font-size-xl);   font-weight: 700; line-height: 1.3; }
+h3 { font-size: var(--font-size-lg);   font-weight: 600; line-height: 1.4; }
+h4 { font-size: var(--font-size-base); font-weight: 600; }
+p  { margin-bottom: var(--space-sm);   max-width: 72ch; }
+
+.page-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.muted { color: var(--color-muted); font-size: var(--font-size-sm); }
+
+/* =========================================================================
+   4. LAYOUT UTILITIES
+   ========================================================================= */
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.center { text-align: center; }
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.spacer { flex: 1; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* =========================================================================
+   5. NAVIGATION BAR
+   ========================================================================= */
+
+.navbar {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.navbar .brand {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.navbar .lang-badge {
+  background: rgba(255,255,255,0.2);
+  border-radius: var(--radius-sm);
+  padding: 2px 10px;
+  font-size: var(--font-size-sm);
+  color: #fff;
+}
+
+.navbar .nav-link {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.navbar .nav-link:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+/* =========================================================================
+   6. BUTTONS
+   ========================================================================= */
+
+/* Base button reset */
+button, .btn {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 14px 28px;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  text-decoration: none;
+  transition: background-color 0.15s, box-shadow 0.15s;
+  box-shadow: var(--shadow-btn);
+}
+
+/* Primary (blue) */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--color-primary-dk);
+}
+
+/* Success / confirm (green) */
+.btn-success {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+.btn-success:hover, .btn-success:focus {
+  background-color: var(--color-accent-dk);
+}
+
+/* Danger / cancel (red) */
+.btn-danger {
+  background-color: var(--color-danger);
+  color: #fff;
+}
+.btn-danger:hover, .btn-danger:focus {
+  background-color: #9b2b20;
+}
+
+/* Ghost / secondary */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-shadow: none;
+}
+.btn-ghost:hover, .btn-ghost:focus {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Disabled state */
+button:disabled, .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Full-width button helper */
+.btn-block { width: 100%; }
+
+/* Button group: side-by-side with sensible wrapping */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+/* =========================================================================
+   7. CARDS
+   ========================================================================= */
+
+.card {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+/* Feature card (home dashboard) */
+.feature-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 2px solid transparent;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+  cursor: pointer;
+}
+
+.feature-card:hover, .feature-card:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 18px rgba(26,86,168,0.18);
+  transform: translateY(-2px);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.feature-card .card-icon {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.feature-card .card-label {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.feature-card .card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+}
+
+/* Expandable safety/awareness card */
+.info-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-text);
+  border-bottom: 1px solid transparent;
+}
+
+.info-card-header:hover, .info-card-header:focus {
+  background-color: var(--color-surface);
+}
+
+.info-card-header[aria-expanded="true"] {
+  border-bottom-color: var(--color-border);
+  color: var(--color-primary);
+}
+
+.info-card-header .card-toggle {
+  margin-left: auto;
+  font-size: var(--font-size-lg);
+  color: var(--color-muted);
+  transition: transform 0.2s;
+}
+
+.info-card-header[aria-expanded="true"] .card-toggle {
+  transform: rotate(180deg);
+}
+
+.info-card-body {
+  padding: var(--space-md) var(--space-lg);
+  display: none;
+}
+
+.info-card-body.open {
+  display: block;
+}
+
+/* =========================================================================
+   8. FORMS
+   ========================================================================= */
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-base);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.4;
+  appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26,86,168,0.2);
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-xs);
+  font-weight: 600;
+}
+
+/* =========================================================================
+   9. ALERT / NOTICE BOXES
+   ========================================================================= */
+
+.alert {
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.alert-warning {
+  background: var(--color-warning-bg);
+  border: 2px solid var(--color-warning);
+  color: var(--color-warning);
+}
+
+.alert-danger {
+  background: var(--color-danger-bg);
+  border: 2px solid var(--color-danger);
+  color: var(--color-danger);
+}
+
+.alert-success {
+  background: var(--color-success-bg);
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.alert-info {
+  background: #eef4fc;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Demo-only disclaimer banner */
+.demo-banner {
+  background: var(--color-danger-bg);
+  border: 3px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: var(--font-size-lg);
+  color: var(--color-danger);
+}
+
+/* =========================================================================
+   10. VOICE BAR (floating, fixed to bottom of screen)
+   ========================================================================= */
+
+#voice-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: #fff;
+  border-top: 2px solid var(--color-border);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+}
+
+#voice-bar .voice-btn {
+  padding: 8px 18px;
+  min-height: 44px;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+}
+
+#voice-bar .voice-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+#voice-status {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Voice command confirmation toast */
+#voice-confirm-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  display: none;
+  z-index: 1100;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  max-width: 90vw;
+}
+
+/* =========================================================================
+   11. LANGUAGE SELECTOR (index.html)
+   ========================================================================= */
+
+/* Welcome guide bar — sits just below the logo on index.html */
+.welcome-guide-bar {
+  background: #eef4fc;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  margin-bottom: var(--space-lg);
+  max-width: 560px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.welcome-guide-bar .guide-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.welcome-guide-bar .guide-text {
+  flex: 1;
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.welcome-guide-bar .guide-read-btn {
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 40px;
+  align-self: center;
+}
+
+.welcome-guide-bar .guide-read-btn:hover,
+.welcome-guide-bar .guide-read-btn:focus {
+  background: var(--color-primary-dk);
+}
+
+/* Speaker badge shown on each language button */
+.lang-btn .lang-speaker {
+  display: block;
+  font-size: 20px;
+  margin-top: var(--space-xs);
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+
+.lang-btn:hover .lang-speaker,
+.lang-btn:focus .lang-speaker,
+.lang-btn.selected .lang-speaker {
+  opacity: 1;
+}
+
+/* "Speaking" pulse animation on the selected button */
+@keyframes pulse-border {
+  0%   { box-shadow: 0 0 0 0   rgba(26,86,168,0.4); }
+  70%  { box-shadow: 0 0 0 10px rgba(26,86,168,0);   }
+  100% { box-shadow: 0 0 0 0   rgba(26,86,168,0);    }
+}
+
+.lang-btn.speaking {
+  animation: pulse-border 0.8s ease-out 2;
+}
+
+.lang-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-surface);
+}
+
+.lang-screen .logo-block {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.lang-screen .logo-name {
+  font-size: var(--font-size-hero);
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 1px;
+}
+
+.lang-screen .logo-script {
+  font-size: var(--font-size-xl);
+  color: var(--color-muted);
+  margin-top: var(--space-xs);
+}
+
+.lang-screen .logo-tagline {
+  font-size: var(--font-size-base);
+  color: var(--color-muted);
+  margin-top: var(--space-sm);
+  max-width: 44ch;
+}
+
+.lang-screen h2 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.lang-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+}
+
+.lang-btn {
+  background: var(--color-bg);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  min-width: 160px;
+  text-align: center;
+  transition: border-color 0.15s, background-color 0.15s;
+  box-shadow: var(--shadow-card);
+}
+
+.lang-btn:hover, .lang-btn:focus {
+  border-color: var(--color-primary);
+  background-color: #eef4fc;
+}
+
+/* Selected state — highlighted with a thick coloured border */
+.lang-btn.selected {
+  border-color: var(--color-primary);
+  background-color: #dbeafe;
+  color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26,86,168,0.3);
+}
+
+.lang-btn .lang-native { display: block; font-size: var(--font-size-xl); }
+.lang-btn .lang-english { display: block; font-size: var(--font-size-sm); color: var(--color-muted); margin-top: 2px; }
+
+.lang-screen .hint {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+/* =========================================================================
+   12. DASHBOARD (home.html)
+   ========================================================================= */
+
+.dashboard-header {
+  padding: var(--space-lg) 0 var(--space-sm);
+  text-align: center;
+}
+
+.dashboard-header h1 {
+  color: var(--color-primary);
+}
+
+.dashboard-header p {
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+  margin: var(--space-xs) auto 0;
+}
+
+/* =========================================================================
+   13. PAYMENT FLOW (payment.html)
+   ========================================================================= */
+
+.payment-step {
+  display: none;
+}
+.payment-step.active {
+  display: block;
+}
+
+.step-indicator {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  align-items: center;
+}
+
+.step-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-border);
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
+}
+
+.step-dot.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.step-dot.done {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.step-line {
+  flex: 1;
+  height: 3px;
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+.step-line.done {
+  background: var(--color-accent);
+}
+
+.review-box {
+  background: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.review-box .review-amount {
+  font-size: var(--font-size-hero);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.review-box .review-recipient {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin-top: var(--space-xs);
+}
+
+.result-box {
+  text-align: center;
+  padding: var(--space-xl) var(--space-md);
+}
+
+/* =========================================================================
+   14. SAFETY & AWARENESS PAGES
+   ========================================================================= */
+
+.safety-intro {
+  font-size: var(--font-size-lg);
+  color: var(--color-muted);
+  margin-bottom: var(--space-lg);
+}
+
+.lesson-slide {
+  display: none;
+}
+.lesson-slide.active {
+  display: block;
+}
+
+.quiz-option {
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+  transition: border-color 0.12s;
+}
+
+.quiz-option:hover, .quiz-option:focus {
+  border-color: var(--color-primary);
+  background: #eef4fc;
+}
+
+.quiz-option.correct { border-color: var(--color-accent); background: var(--color-success-bg); color: var(--color-accent); }
+.quiz-option.wrong   { border-color: var(--color-danger); background: var(--color-danger-bg); color: var(--color-danger); }
+
+/* =========================================================================
+   15. VOLUNTEER PAGE
+   ========================================================================= */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: pointer;
+  box-shadow: none;
+  min-height: unset;
+  transition: color 0.12s, border-color 0.12s;
+  margin-bottom: -2px;
+}
+
+.tab-btn.active, .tab-btn:focus, .tab-btn:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.volunteer-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.volunteer-card .vol-name { font-weight: 700; font-size: var(--font-size-lg); }
+.volunteer-card .vol-detail { color: var(--color-muted); font-size: var(--font-size-sm); }
+
+/* =========================================================================
+   16. RESPONSIVE (mobile)
+   ========================================================================= */
+
+@media (max-width: 600px) {
+  :root {
+    --font-size-hero: 28px;
+    --font-size-xl:   22px;
+    --font-size-lg:   19px;
+    --font-size-base: 16px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lang-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lang-btn {
+    min-width: unset;
+    padding: var(--space-md);
+  }
+
+  .btn-group {
+    flex-direction: column;
+  }
+
+  .btn-group button, .btn-group .btn {
+    width: 100%;
+  }
+
+  #voice-bar {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+  }
+
+  .review-box .review-amount {
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* =========================================================================
+   17. FOCUS / ACCESSIBILITY
+   ========================================================================= */
+
+/*
+ * Always show a highly visible focus ring.
+ * We remove the default outline only to replace it with a better one.
+ */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* Skip-to-main link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 700;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* High-contrast selection highlight */
+::selection {
+  background: #bfdbfe;
+  color: var(--color-text);
+}

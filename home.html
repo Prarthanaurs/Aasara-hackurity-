@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  home.html — Aasara Dashboard
+  ----------------------------
+  The main navigation hub shown after language selection.
+
+  What this page does:
+  1. Shows a greeting and the selected language badge.
+  2. Displays five large feature cards linking to each module.
+  3. Injects the shared voice bar (from voice.js).
+  4. Speaks a welcome message the first time the user arrives.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- Navigation bar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <span class="brand" aria-label="Aasara">Aasara · ಆಸರೆ</span>
+    <span class="spacer"></span>
+    <!-- Language badge — filled by JS -->
+    <span class="lang-badge" id="lang-badge" aria-label="Selected language"></span>
+  </nav>
+
+  <!-- =====================================================================
+       Main content
+       ===================================================================== -->
+  <main id="main-content" class="container">
+
+    <!-- Page header -->
+    <header class="dashboard-header">
+      <h1 data-i18n="home_greeting">Welcome to Aasara</h1>
+      <p data-i18n="home_subtitle">How can we help you today?</p>
+    </header>
+
+    <!--
+      Feature cards grid.
+      Each card is an <a> element so it is keyboard-navigable and
+      works as a proper link (no JS needed for navigation).
+    -->
+    <section aria-label="Features" style="padding-bottom: var(--space-xl);">
+      <div class="card-grid" role="list">
+
+        <!-- Guided Payment -->
+        <a
+          href="payment.html"
+          class="feature-card"
+          role="listitem"
+          data-card-label="card_payment"
+          data-card-desc="card_payment_desc"
+          aria-label="Guided Payment — Learn to send money safely step by step"
+        >
+          <span class="card-icon" aria-hidden="true">💳</span>
+          <span class="card-label" data-i18n="card_payment">Guided Payment</span>
+          <span class="card-desc"  data-i18n="card_payment_desc">Learn to send money safely step by step</span>
+        </a>
+
+        <!-- Digital Safety -->
+        <a
+          href="safety.html"
+          class="feature-card"
+          role="listitem"
+          data-card-label="card_safety"
+          data-card-desc="card_safety_desc"
+          aria-label="Digital Safety — Protect yourself from scams and fraud"
+        >
+          <span class="card-icon" aria-hidden="true">🛡️</span>
+          <span class="card-label" data-i18n="card_safety">Digital Safety</span>
+          <span class="card-desc"  data-i18n="card_safety_desc">Protect yourself from scams and fraud</span>
+        </a>
+
+        <!-- Awareness Lessons -->
+        <a
+          href="awareness.html"
+          class="feature-card"
+          role="listitem"
+          data-card-label="card_awareness"
+          data-card-desc="card_awareness_desc"
+          aria-label="Awareness Lessons — Short lessons on digital payments"
+        >
+          <span class="card-icon" aria-hidden="true">📚</span>
+          <span class="card-label" data-i18n="card_awareness">Awareness Lessons</span>
+          <span class="card-desc"  data-i18n="card_awareness_desc">Short lessons on digital payments</span>
+        </a>
+
+        <!-- Volunteer Help -->
+        <a
+          href="volunteer.html"
+          class="feature-card"
+          role="listitem"
+          data-card-label="card_volunteer"
+          data-card-desc="card_volunteer_desc"
+          aria-label="Volunteer Help — Connect with a helper near you"
+        >
+          <span class="card-icon" aria-hidden="true">🤝</span>
+          <span class="card-label" data-i18n="card_volunteer">Volunteer Help</span>
+          <span class="card-desc"  data-i18n="card_volunteer_desc">Connect with a helper near you</span>
+        </a>
+
+        <!-- Essential Services -->
+        <a
+          href="volunteer.html#services"
+          class="feature-card"
+          role="listitem"
+          data-card-label="card_services"
+          data-card-desc="card_services_desc"
+          aria-label="Essential Services — Balance check and official guides"
+        >
+          <span class="card-icon" aria-hidden="true">🏦</span>
+          <span class="card-label" data-i18n="card_services">Essential Services</span>
+          <span class="card-desc"  data-i18n="card_services_desc">Balance check and official guides</span>
+        </a>
+
+      </div><!-- /.card-grid -->
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       Scripts — order matters:
+       languages.js must load before voice.js, and both before the inline script.
+       ===================================================================== -->
+  <script src="js/languages.js"></script>
+  <script src="js/voice.js"></script>
+  <script>
+    /*
+     * home.html inline script
+     * -----------------------
+     * 1. Applies the selected language to all data-i18n elements.
+     * 2. Shows the language badge.
+     * 3. Injects the voice bar.
+     * 4. Registers the page reader and speaks a welcome on first visit.
+     * 5. Reads each feature card aloud when the user hovers, focuses, or taps it.
+     */
+
+    // Map language codes to readable labels for the badge
+    const LANG_LABELS = { en: 'English', kn: 'ಕನ್ನಡ', hi: 'हिंदी', te: 'తెలుగు' };
+
+    // 1. Apply language translations
+    applyLanguage();
+
+    // 2. Show language badge
+    const lang = getLanguage();
+    const badge = document.getElementById('lang-badge');
+    if (badge) {
+      badge.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+    }
+
+    // 3. Inject the floating voice bar
+    injectVoiceBar();
+
+    // 4. Register what the "Read Aloud" button does on this page:
+    //    reads the greeting + all five card names in order
+    registerPageReader(() => {
+      const cardNames = Array.from(document.querySelectorAll('.feature-card'))
+        .map(c => t(c.dataset.cardLabel) + '. ' + t(c.dataset.cardDesc))
+        .join('. ');
+      speakRaw(t('home_voice_welcome') + '. ' + cardNames);
+    });
+
+    // 5. Card hover / focus / tap — read the card aloud in the chosen language
+    //
+    //    mouseenter  → fires on desktop when the mouse moves over the card
+    //    focus       → fires when a keyboard user Tabs onto the card
+    //    touchstart  → fires on mobile when a finger first touches the card
+    //    click       → fires on both desktop and mobile when the card is tapped/clicked
+    //
+    //    mouseleave / blur → cancel speech so it doesn't keep talking
+    //    after the user moves away without clicking.
+
+    // Track which card is currently being described so we don't repeat
+    let lastSpokenCard = null;
+
+    document.querySelectorAll('.feature-card').forEach(card => {
+
+      // Build the spoken phrase for this card using the current language
+      function readCard() {
+        const labelKey = card.dataset.cardLabel;
+        const descKey  = card.dataset.cardDesc;
+        if (!labelKey) return;
+
+        // Don't re-speak if this card is already speaking
+        if (lastSpokenCard === card) return;
+        lastSpokenCard = card;
+
+        // Spoken text: "Guided Payment. Learn to send money safely step by step."
+        speakRaw(t(labelKey) + '. ' + t(descKey));
+      }
+
+      function clearCard() {
+        // Only clear the tracker if this card was the one speaking
+        if (lastSpokenCard === card) {
+          lastSpokenCard = null;
+          // Do NOT cancel speech on leave — let it finish the short phrase.
+          // (Cancelling on mouseleave feels abrupt and confusing for older users.)
+        }
+      }
+
+      // Desktop: hover
+      card.addEventListener('mouseenter', readCard);
+      card.addEventListener('mouseleave', clearCard);
+
+      // Keyboard: Tab navigation
+      card.addEventListener('focus', readCard);
+      card.addEventListener('blur',  clearCard);
+
+      // Mobile: first touch (touchstart fires before click, gives immediate feedback)
+      card.addEventListener('touchstart', () => {
+        lastSpokenCard = null;  // force re-read on touch even if same card
+        readCard();
+      }, { passive: true });
+    });
+
+    // 6. Voice commands available on this page
+    startListening({
+      'payment':       () => window.location.href = 'payment.html',
+      'open payment':  () => window.location.href = 'payment.html',
+      'safety':        () => window.location.href = 'safety.html',
+      'open safety':   () => window.location.href = 'safety.html',
+      'lessons':       () => window.location.href = 'awareness.html',
+      'awareness':     () => window.location.href = 'awareness.html',
+      'volunteer':     () => window.location.href = 'volunteer.html',
+      'services':      () => window.location.href = 'volunteer.html#services',
+      'help':          () => speak('home_voice_welcome'),
+      'repeat':        () => speak('home_voice_welcome'),
+    });
+
+    // 7. Speak welcome message automatically on first visit
+    //    (tracked per-session to avoid replaying on every navigation)
+    if (!sessionStorage.getItem('aasara_welcomed')) {
+      sessionStorage.setItem('aasara_welcomed', '1');
+      setTimeout(() => speak('home_voice_welcome'), 600);
+    }
+  </script>
+
+</body>
+</html>

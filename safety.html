@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  safety.html — Digital Safety Tips
+  -----------------------------------
+  Educational content on recognising and avoiding payment scams.
+  This page does not detect fraud — it provides general awareness guidance.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Digital Safety</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
+    <span class="spacer"></span>
+    <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
+  </nav>
+
+  <main id="main-content" class="container" style="padding-top: var(--space-lg);">
+
+    <h1 class="page-title" data-i18n="safety_title">Digital Safety</h1>
+    <p class="safety-intro" data-i18n="safety_intro">
+      Learn how to protect yourself from payment scams.
+    </p>
+
+    <!--
+      Safety tip cards are injected here by safety.js (initSafety).
+      Each card is expandable: click to reveal the full tip + read-aloud.
+    -->
+    <section id="safety-cards" aria-label="Safety tips">
+      <!-- Cards inserted by JS -->
+    </section>
+
+    <!-- Educational disclaimer -->
+    <div class="alert alert-info" style="margin-top: var(--space-lg);">
+      <strong>ⓘ Note: </strong>
+      <span data-i18n="safety_disclaimer">
+        This guidance is educational. Aasara cannot guarantee that any transaction
+        is safe. Always verify using your official bank application.
+      </span>
+    </div>
+
+    <!-- Back to home -->
+    <div style="margin-top: var(--space-lg); margin-bottom: var(--space-md);">
+      <a href="home.html" class="btn btn-ghost" data-i18n="nav_home">Home</a>
+    </div>
+
+  </main>
+
+  <script src="js/languages.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/safety.js"></script>
+  <script>
+    applyLanguage();
+    injectVoiceBar();
+    initSafety();
+
+    // Voice commands
+    startListening({
+      'home':    () => window.location.href = 'home.html',
+      'go back': () => window.location.href = 'home.html',
+      'repeat':  () => speak('safety_intro'),
+    });
+  </script>
+
+</body>
+</html>
