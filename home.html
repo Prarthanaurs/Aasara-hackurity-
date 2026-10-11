@@ -17,6 +17,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aasara — Home</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Early redirect guard: runs before any other script or render -->
+  <script>
+    if (!sessionStorage.getItem('aasara_lang')) {
+      window.location.replace('index.html');
+    }
+  </script>
 </head>
 <body class="home-page">
 
@@ -218,13 +224,6 @@
      * 5. Registers the page reader and speaks a welcome on first visit.
      * 6. Reads each feature card aloud when the user hovers, focuses, or taps it.
      */
-
-    // Guard: if no language has been chosen yet, send the user to the
-    // language selection screen first. This handles direct navigation,
-    // page refreshes, and bookmarks that land on home.html.
-    if (!sessionStorage.getItem('aasara_lang')) {
-      window.location.replace('index.html');
-    }
 
     // Map language codes to readable labels for the badge
     const LANG_LABELS = { en: 'English', kn: 'ಕನ್ನಡ', hi: 'हिंदी', te: 'తెలుగు' };
