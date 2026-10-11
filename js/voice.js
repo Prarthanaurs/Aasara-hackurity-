@@ -153,7 +153,12 @@ function stopSpeaking() {
 // ---------------------------------------------------------------------------
 
 /**
- * Start listening for voice commands.
+ * Register voice commands for the current page WITHOUT starting the microphone.
+ *
+ * Pages call this at load time to register their command map.
+ * The microphone is only activated when the user explicitly presses the
+ * 🎤 Listen button — this avoids triggering the browser's mic-permission
+ * prompt on every page navigation.
  *
  * commandMap is an object like:
  *   {
@@ -161,21 +166,24 @@ function stopSpeaking() {
  *     'go back':      () => history.back(),
  *   }
  *
- * When a recognised phrase matches a command key (case-insensitive),
- * a confirmation toast is shown.  The user must tap the toast to
- * execute the command — it is never executed automatically.
- *
  * @param {Object} commandMap
  */
 function startListening(commandMap) {
+  // Just store the map. Recognition starts only when the user clicks Listen.
+  _commandMap = commandMap || {};
+}
+
+/**
+ * Actually start microphone recognition using the stored command map.
+ * Called internally by the Listen button in the voice bar.
+ */
+function _startRecognition() {
   const { recognition } = isSpeechSupported();
 
   if (!recognition) {
     _setVoiceStatus(t('mic_not_supported'));
     return;
   }
-
-  _commandMap = commandMap || {};
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   _recognition = new SpeechRecognition();
@@ -336,12 +344,12 @@ function injectVoiceBar() {
     listenBtn.setAttribute('aria-pressed', 'false');
     listenBtn.textContent = t('listen');
     listenBtn.addEventListener('click', () => {
-      if (listenBtn.getAttribute('aria-pressed') === 'true') {
-        stopListening();
-      } else {
-        startListening(_commandMap);
-      }
-    });
+        if (listenBtn.getAttribute('aria-pressed') === 'true') {
+          stopListening();
+        } else {
+          _startRecognition();
+        }
+      });
     bar.appendChild(listenBtn);
   } else {
     // Show a small note that mic is unavailable

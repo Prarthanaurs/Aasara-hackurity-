@@ -16,7 +16,7 @@
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
+  <nav class="navbar" role="navigation" aria-label="Main navigation" id="page-navbar">
     <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
     <span class="spacer"></span>
     <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
@@ -54,10 +54,12 @@
   </main>
 
   <script src="js/languages.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/voice.js"></script>
   <script src="js/safety.js"></script>
   <script>
     applyLanguage();
+    injectThemeToggle(document.getElementById('page-navbar'));
     injectVoiceBar();
     initSafety();
 

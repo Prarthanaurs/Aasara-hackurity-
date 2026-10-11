@@ -73,9 +73,7 @@ function initPayment() {
 
   // Register this page's "Read Aloud" function with voice.js
   registerPageReader(_readCurrentStepInternal);
-
-  // Speak the Step 1 instruction automatically
-  setTimeout(() => speak('payment_voice_step1'), 500);
+  // (No auto-speak on init — user presses "Read Aloud" to hear the instructions)
 }
 
 // ---------------------------------------------------------------------------

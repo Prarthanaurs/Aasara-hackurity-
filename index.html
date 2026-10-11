@@ -180,6 +180,7 @@
        languages.js must load first, then voice.js, then the inline script.
        ====================================================================== -->
   <script src="js/languages.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/voice.js"></script>
   <script>
     /*
@@ -196,9 +197,11 @@
      */
 
     // ── State ────────────────────────────────────────────────────────────────
-    let selectedLang       = null;
-    let autoReadDone       = false;   // true after we auto-read the guide once
-    let lastHoveredLang    = null;    // avoid re-speaking on micro-movements
+    // Inject theme toggle into the lang-screen so it is accessible
+    injectThemeToggle(document.querySelector('.lang-screen'));
+
+    let selectedLang    = null;
+    let lastHoveredLang = null;    // avoid re-speaking on micro-movements
 
     // ── Elements ─────────────────────────────────────────────────────────────
     const langButtons   = document.querySelectorAll('.lang-btn');
@@ -230,22 +233,9 @@
         selectLanguage(btn.dataset.lang, /* silent = */ false);
       });
 
-      // 3. HOVER → speak language name (desktop mice)
-      btn.addEventListener('mouseenter', () => {
-        if (btn.dataset.lang === lastHoveredLang) return;   // avoid repeat
-        lastHoveredLang = btn.dataset.lang;
-        speakLangName(btn);
-      });
-
-      // 4. FOCUS → speak language name (keyboard Tab navigation)
-      btn.addEventListener('focus', () => {
-        speakLangName(btn);
-      });
-
-      // Reset hover tracker when mouse leaves the button area
-      btn.addEventListener('mouseleave', () => {
-        lastHoveredLang = null;
-      });
+      // Hover / focus: no auto-speak — user must click the 🔊 button or
+      // press Read Aloud. Keep tracker reset only.
+      btn.addEventListener('mouseleave', () => { lastHoveredLang = null; });
     });
 
     // ── 5. Read Guide button ──────────────────────────────────────────────────
@@ -267,21 +257,7 @@
       }
     });
 
-    // ── 8. Auto-read guide on first user interaction ──────────────────────────
-    //
-    // Browsers block speech until the user has interacted with the page at
-    // least once. We listen for the first click/keydown anywhere on the page,
-    // then read the guide — but only once per page load.
-    //
-    document.addEventListener('click', _autoReadOnce, { once: true });
-    document.addEventListener('keydown', _autoReadOnce, { once: true });
-
-    function _autoReadOnce() {
-      if (autoReadDone) return;
-      autoReadDone = true;
-      // Short delay so the triggered click-event target is processed first
-      setTimeout(readWelcomeGuide, 350);
-    }
+    // Auto-read removed — speech only fires when user taps "🔊 Read" button.
 
     // ─────────────────────────────────────────────────────────────────────────
     // Helper functions

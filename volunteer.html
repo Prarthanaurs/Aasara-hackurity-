@@ -25,7 +25,7 @@
 
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <nav class="navbar" role="navigation" aria-label="Main navigation">
+  <nav class="navbar" role="navigation" aria-label="Main navigation" id="page-navbar">
     <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
     <span class="spacer"></span>
     <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
@@ -281,13 +281,61 @@
 
     </div><!-- /#tab-services -->
 
+    <!-- ===================================================================
+         Volunteer Leaderboard
+         Recognises volunteers who have helped the most people.
+         =================================================================== -->
+    <section id="leaderboard" class="card" style="margin-top: var(--space-xl);">
+      <h2>🏆 Volunteer Leaderboard</h2>
+      <p style="color: var(--color-muted); margin: var(--space-xs) 0 var(--space-lg);">
+        Top volunteers who helped the most people this month (demonstration only).
+      </p>
+      <ol class="leaderboard-list" role="list">
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥇</span>
+          <span class="lb-name">Priya Nair</span>
+          <span class="lb-city">Bengaluru</span>
+          <span class="lb-count">42 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥈</span>
+          <span class="lb-name">Ravi Shankar</span>
+          <span class="lb-city">Hyderabad</span>
+          <span class="lb-count">38 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥉</span>
+          <span class="lb-name">Anita Reddy</span>
+          <span class="lb-city">Chennai</span>
+          <span class="lb-count">31 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">4.</span>
+          <span class="lb-name">Mohan Das</span>
+          <span class="lb-city">Mumbai</span>
+          <span class="lb-count">27 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">5.</span>
+          <span class="lb-name">Sunita Patil</span>
+          <span class="lb-city">Pune</span>
+          <span class="lb-count">22 people helped</span>
+        </li>
+      </ol>
+      <p class="muted" style="margin-top: var(--space-md); font-size: var(--font-size-sm);">
+        ⓘ Demonstration data only. No real identities are used.
+      </p>
+    </section>
+
   </main>
 
   <script src="js/languages.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/voice.js"></script>
   <script src="js/volunteer.js"></script>
   <script>
     applyLanguage();
+    injectThemeToggle(document.getElementById('page-navbar'));
     injectVoiceBar();
     initVolunteer();
 
