@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-scale: 1;
+    --app-bg: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --border-color: #cbd5e1;
+    --primary-color: #1e3a8a;
+    --primary-hover: #1e40af;
+    --accent-color: #d97706;
+  }
+
+  body.font-large {
+    --font-scale: 1.15;
+  }
+
+  body.font-xlarge {
+    --font-scale: 1.3;
+  }
+
+  body.high-contrast {
+    --app-bg: #000000;
+    --card-bg: #121212;
+    --text-primary: #ffffff;
+    --text-secondary: #fef08a;
+    --border-color: #facc15;
+    --primary-color: #fbbf24;
+    --primary-hover: #f59e0b;
+    --accent-color: #38bdf8;
+  }
+
+  html {
+    font-size: calc(16px * var(--font-scale));
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--app-bg);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Kannada', 'Noto Sans Devanagari', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    touch-action: manipulation;
+  }
+
+  /* Focus ring for accessibility */
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+  }
+}
+
+/* Pulsing audio indicator animation */
+@keyframes audio-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.4;
+  }
+}
+
+.animate-audio-ring {
+  animation: audio-pulse 1.8s ease-in-out infinite;
+}
