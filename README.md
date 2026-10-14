@@ -1,4 +1,4 @@
-# Aasara — ಆಸರೆ
+
 **Digital Payment & Safety Assistant for Older Adults**
 
 Aasara (ಆಸರೆ, meaning *support* in Kannada) is a beginner-friendly, voice-assisted web application that helps older adults navigate digital payments confidently and safely. Built as a hackathon project using plain HTML, CSS and JavaScript — no frameworks, no build tools, no login required.
