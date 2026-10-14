@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import {
-  ShieldAlert,
-  Send,
-  PhoneCall,
-  GraduationCap,
-  BookOpen,
   Volume2,
-  VolumeX,
-  UserCheck,
+  Square,
+  Mic,
+  Bot,
+  Home,
 } from 'lucide-react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
+import { LanguageOnboarding } from './components/LanguageOnboarding';
+import { HomeDashboard } from './components/HomeDashboard';
 import { MessageChecker } from './components/MessageChecker';
 import { UpiPaymentGuide } from './components/UpiPaymentGuide';
 import { EmergencySupport } from './components/EmergencySupport';
@@ -18,95 +17,88 @@ import { AiTutor } from './components/AiTutor';
 import { EducationalLessons } from './components/EducationalLessons';
 import { HumanHelpModal } from './components/HumanHelpModal';
 
-const AppContent: React.FC = () => {
-  const { language, t, isSpeaking, stopSpeaking, speak, setIsHelpModalOpen } = useLanguage();
+const MainApp: React.FC = () => {
+  const {
+    language,
+    t,
+    isSpeaking,
+    stopSpeaking,
+    speak,
+    showOnboarding,
+  } = useLanguage();
+
   const [activeTab, setActiveTab] = useState<
-    'checker' | 'payment' | 'emergency' | 'tutor' | 'lessons'
-  >('checker');
+    'home' | 'checker' | 'payment' | 'emergency' | 'tutor' | 'lessons'
+  >('home');
 
-  const tabList = [
-    {
-      id: 'checker',
-      label: t.tabs.checker[language],
-      icon: ShieldAlert,
-      color: 'text-blue-700',
-      activeBg: 'bg-blue-700 text-white',
-    },
-    {
-      id: 'payment',
-      label: t.tabs.payment[language],
-      icon: Send,
-      color: 'text-emerald-700',
-      activeBg: 'bg-emerald-700 text-white',
-    },
-    {
-      id: 'emergency',
-      label: t.tabs.emergency[language],
-      icon: PhoneCall,
-      color: 'text-red-700',
-      activeBg: 'bg-red-700 text-white animate-pulse',
-    },
-    {
-      id: 'tutor',
-      label: t.tabs.tutor[language],
-      icon: GraduationCap,
-      color: 'text-purple-700',
-      activeBg: 'bg-purple-700 text-white',
-    },
-    {
-      id: 'lessons',
-      label: t.tabs.lessons[language],
-      icon: BookOpen,
-      color: 'text-teal-700',
-      activeBg: 'bg-teal-700 text-white',
-    },
-  ];
+  // If initial onboarding is active, render Image 1 layout
+  if (showOnboarding) {
+    return <LanguageOnboarding />;
+  }
 
-  const handleTabChange = (tabId: any) => {
-    stopSpeaking();
-    setActiveTab(tabId);
-    const tabObj = tabList.find((x) => x.id === tabId);
-    if (tabObj) {
-      speak(tabObj.label, `tab-${tabId}`);
+  const handleReadAloudBottom = () => {
+    if (activeTab === 'home') {
+      speak(
+        `${t.home.welcomeTitle[language]}. ${t.home.welcomeSubtitle[language]}. ${t.home.welcomeHint[language]}`,
+        'bottom-read-home'
+      );
+    } else if (activeTab === 'checker') {
+      speak(
+        `${t.checker.title[language]}. ${t.checker.subtitle[language]}`,
+        'bottom-read-checker'
+      );
+    } else if (activeTab === 'payment') {
+      speak(t.upi.title[language], 'bottom-read-payment');
+    } else if (activeTab === 'emergency') {
+      speak(
+        `${t.emergency.call1930[language]}. ${t.emergency.goldenHourDesc[language]}`,
+        'bottom-read-emergency'
+      );
+    } else {
+      speak(t.tutor.title[language], 'bottom-read-tutor');
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between selection:bg-amber-200">
+    <div className="min-h-screen bg-[#1c110a] text-amber-50 flex flex-col justify-between selection:bg-orange-500 selection:text-white transition-colors duration-300">
       <div>
-        <Navbar />
+        <Navbar currentTab={activeTab} onTabChange={setActiveTab} />
 
-        {/* Big accessible navigation tabs for seniors */}
-        <nav
-          aria-label="Main features"
-          className="max-w-6xl mx-auto px-4 pt-4 pb-2"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 bg-white p-2 rounded-3xl shadow-sm border border-slate-200">
-            {tabList.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabChange(tab.id)}
-                  className={`flex flex-col sm:flex-row items-center justify-center gap-2 p-3 sm:py-3.5 sm:px-4 rounded-2xl font-black text-sm sm:text-base transition-all cursor-pointer select-none active:scale-95 ${
-                    isActive
-                      ? `${tab.activeBg} shadow-lg ring-2 ring-slate-300`
-                      : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200'
-                  } ${tab.id === 'emergency' && !isActive ? 'border-red-300 bg-red-50 text-red-800' : ''}`}
-                >
-                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
-                  <span className="text-center sm:text-left leading-tight">
-                    {tab.label}
-                  </span>
-                </button>
-              );
-            })}
+        {/* Feature views navigation header when not on home */}
+        {activeTab !== 'home' && (
+          <div className="max-w-5xl mx-auto px-4 pt-4 flex items-center justify-between">
+            <button
+              onClick={() => setActiveTab('home')}
+              className="inline-flex items-center gap-2 py-2 px-4 rounded-xl bg-[#281810] hover:bg-[#382216] border border-amber-600/30 text-amber-300 font-bold text-sm cursor-pointer transition-all active:scale-95"
+            >
+              <Home className="w-4 h-4" />
+              <span>
+                {language === 'kn'
+                  ? '← ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ'
+                  : language === 'hi'
+                  ? '← होम पर वापस जाएं'
+                  : language === 'te'
+                  ? '← హోమ్‌కు తిరిగి వెళ్లండి'
+                  : '← Back to Home'}
+              </span>
+            </button>
+
+            {/* Quick feature indicator pill */}
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+              {activeTab === 'checker' && 'Feature B: Safety Scanner'}
+              {activeTab === 'payment' && 'Feature C: Safe UPI Pay'}
+              {activeTab === 'emergency' && 'Feature D: 1930 Cyber Support'}
+              {activeTab === 'tutor' && 'Feature E: AI Safety Tutor'}
+              {activeTab === 'lessons' && 'Feature F: Educational Lessons'}
+            </span>
           </div>
-        </nav>
+        )}
 
-        {/* Feature Component Render */}
-        <main className="pb-24">
+        {/* Main Content Area */}
+        <main className="pb-32">
+          {activeTab === 'home' && (
+            <HomeDashboard onSelectFeature={(feature) => setActiveTab(feature)} />
+          )}
           {activeTab === 'checker' && <MessageChecker />}
           {activeTab === 'payment' && <UpiPaymentGuide />}
           {activeTab === 'emergency' && <EmergencySupport />}
@@ -115,44 +107,77 @@ const AppContent: React.FC = () => {
         </main>
       </div>
 
-      {/* Persistent Elder Safety Bottom Action Bar */}
-      <footer className="sticky bottom-0 z-40 bg-white/95 backdrop-blur border-t-2 border-slate-300 py-3 px-4 shadow-2xl">
-        <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
-          {/* Audio Speaking Status / Stop Audio */}
-          {isSpeaking ? (
-            <button
-              onClick={stopSpeaking}
-              className="flex items-center gap-2 py-2.5 px-4 rounded-2xl bg-amber-500 text-white font-bold text-sm sm:text-base border border-amber-600 shadow cursor-pointer animate-pulse"
-            >
-              <VolumeX className="w-5 h-5" />
-              <span>{t.stopReading[language]}</span>
-            </button>
-          ) : (
-            <button
-              onClick={() =>
-                speak(
-                  language === 'kn'
-                    ? 'ನೀವು ಆಸರಾ ಮುಖ್ಯ ಪರದೆಯಲ್ಲಿದ್ದೀರಿ. ನಿಮಗೆ ಬೇಕಾದ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.'
-                    : language === 'hi'
-                    ? 'आप आसरा ऐप में हैं। अपनी पसंद का विकल्प चुनें।'
-                    : 'You are on Aasara. Tap any button to proceed safely.',
-                  'bottom-guide'
-                )
-              }
-              className="flex items-center gap-2 py-2.5 px-4 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-indigo-800 font-bold text-sm sm:text-base border border-indigo-200 cursor-pointer"
-            >
-              <Volume2 className="w-5 h-5" />
-              <span>{t.repeatInstruction[language]}</span>
-            </button>
-          )}
+      {/* Floating AI Bot Assistant Avatar matching bottom-right of Image 2 */}
+      <button
+        onClick={() => {
+          setActiveTab('tutor');
+          speak(
+            language === 'kn'
+              ? 'ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಆಸರಾ ಎಐ ಗುರು. ಏನು ಸಹಾಯ ಬೇಕು?'
+              : language === 'hi'
+              ? 'नमस्ते! मैं आपका आसरा एआई साथी हूँ। क्या सहायता चाहिए?'
+              : language === 'te'
+              ? 'నమస్కారం! నేను మీ ఆసరా ఏఐ గైడ్‌ని. ఏమి సహాయం కావాలి?'
+              : 'Hello! I am your Aasara AI Tutor. How can I help you stay safe?',
+            'bot-greeting'
+          );
+        }}
+        className="fixed bottom-24 right-5 sm:right-8 z-40 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 text-white shadow-2xl flex items-center justify-center cursor-pointer hover:scale-110 active:scale-95 transition-all ring-4 ring-amber-400/40 animate-bounce"
+        title="Ask AI Tutor"
+        aria-label="Open AI Tutor"
+      >
+        <Bot className="w-8 h-8 sm:w-9 sm:h-9" />
+      </button>
 
-          {/* Quick Human Assistance */}
+      {/* Fixed Bottom Accessibility Control Bar matching Image 2 */}
+      <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#160d07]/95 backdrop-blur border-t-2 border-amber-900/60 py-3 px-4 shadow-2xl">
+        <div className="max-w-4xl mx-auto flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
+          {/* Read Aloud Button (Orange) */}
           <button
-            onClick={() => setIsHelpModalOpen(true)}
-            className="flex items-center gap-2 py-2.5 px-4 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm sm:text-base shadow cursor-pointer active:scale-95"
+            type="button"
+            onClick={handleReadAloudBottom}
+            className={`flex items-center gap-2 py-3 px-5 sm:px-6 rounded-2xl font-extrabold text-base sm:text-lg text-white transition-all cursor-pointer active:scale-95 shadow-lg ${
+              isSpeaking
+                ? 'bg-amber-600 ring-4 ring-amber-400/50 animate-pulse'
+                : 'bg-orange-600 hover:bg-orange-500'
+            }`}
           >
-            <UserCheck className="w-5 h-5" />
-            <span>{t.needHelp[language]}</span>
+            <Volume2 className="w-5 h-5 shrink-0" />
+            <span>{t.readAloud[language]}</span>
+          </button>
+
+          {/* Stop Button (Dark with border) */}
+          <button
+            type="button"
+            onClick={stopSpeaking}
+            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-[#28170e] hover:bg-[#382014] text-stone-300 hover:text-white border border-stone-700 font-bold text-base cursor-pointer active:scale-95"
+          >
+            <Square className="w-4 h-4 fill-stone-400 text-stone-400" />
+            <span>{t.stopReading[language]}</span>
+          </button>
+
+          {/* Listen Button (Voice input toggle) */}
+          <button
+            type="button"
+            onClick={() => {
+              if (activeTab === 'home') {
+                setActiveTab('checker');
+              }
+              speak(
+                language === 'kn'
+                  ? 'ಸಂದೇಶ ಅಥವಾ ಪ್ರಶ್ನೆಯನ್ನು ಹೇಳಿ'
+                  : language === 'hi'
+                  ? 'संदेश या प्रश्न बोलें'
+                  : language === 'te'
+                  ? 'సందేశం లేదా ప్రశ్నను చెప్పండి'
+                  : 'Listening. Please speak now.',
+                'listen-prompt'
+              );
+            }}
+            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-[#28170e] hover:bg-[#382014] text-stone-300 hover:text-white border border-stone-700 font-bold text-base cursor-pointer active:scale-95"
+          >
+            <Mic className="w-5 h-5 text-emerald-400" />
+            <span>{t.listen[language]}</span>
           </button>
         </div>
       </footer>
@@ -166,7 +191,7 @@ const AppContent: React.FC = () => {
 export default function App() {
   return (
     <LanguageProvider>
-      <AppContent />
+      <MainApp />
     </LanguageProvider>
   );
 }

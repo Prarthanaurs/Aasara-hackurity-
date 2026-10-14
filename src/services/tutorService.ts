@@ -1,4 +1,4 @@
-import type { Language, TutorScenario } from '../types';
+import type { TutorScenario } from '../types';
 
 export const TUTOR_SCENARIOS: TutorScenario[] = [
   {
@@ -157,7 +157,7 @@ export const TUTOR_SCENARIOS: TutorScenario[] = [
 export interface ChatMessage {
   id: string;
   sender: 'user' | 'tutor';
-  text: Record<Language, string>;
+  text: Record<string, string>;
   timestamp: string;
 }
 
@@ -168,11 +168,13 @@ export const COMMON_QUESTIONS = [
       en: 'Can someone steal money just from my phone number or account number?',
       kn: 'ನನ್ನ ಫೋನ್ ನಂಬರ್ ಅಥವಾ ಖಾತೆ ಸಂಖ್ಯೆ ತಿಳಿದರೆ ಯಾರಾದರೂ ಹಣ ಕದಿಯಬಹುದೇ?',
       hi: 'क्या सिर्फ फोन नंबर या खाता नंबर जानने से कोई पैसे चुरा सकता है?',
+      te: 'ఫోన్ నంబర్ లేదా బ్యాంక్ ఖాతా నంబర్ తెలిస్తే ఎవరైనా డబ్బు దొంగిలించవచ్చా?',
     },
     answer: {
       en: 'No. Just knowing your phone number or bank account number is not enough to steal your money. To transfer money, criminals need your secret OTP, UPI PIN, or NetBanking password. As long as you NEVER share your OTP or PIN, your money remains safe.',
       kn: 'ಇಲ್ಲ. ಕೇವಲ ನಿಮ್ಮ ಮೊಬೈಲ್ ನಂಬರ್ ಅಥವಾ ಬ್ಯಾಂಕ್ ಅಕೌಂಟ್ ಸಂಖ್ಯೆ ತಿಳಿದುಕೊಂಡ ಮಾತ್ರಕ್ಕೆ ಯಾರೂ ಹಣ ಕದಿಯಲು ಸಾಧ್ಯವಿಲ್ಲ. ಹಣ ಡ್ರಾ ಮಾಡಲು ನಿಮ್ಮ ರಹಸ್ಯ ಒಟಿಪಿ (OTP) ಅಥವಾ ಯುಪಿಐ ಪಿನ್ (UPI PIN) ಬೇಕೇ ಬೇಕು. ಅದನ್ನು ಯಾರೊಂದಿಗೂ ಹಂಚಿಕೊಳ್ಳದಿದ್ದರೆ ನಿಮ್ಮ ಹಣ ಸುರಕ್ಷಿತವಾಗಿರುತ್ತದೆ.',
       hi: 'नहीं। सिर्फ फोन नंबर या बैंक खाता नंबर जानने से कोई आपके पैसे नहीं निकाल सकता। पैसे निकालने के लिए ठगों को आपका गुप्त ओटीपी (OTP) या यूपीआई पिन चाहिए होता है। जब तक आप पिन या ओटीपी किसी को नहीं बताते, आपका पैसा पूरी तरह सुरक्षित है।',
+      te: 'లేదు. కేవలం మీ ఫోన్ నంబర్ లేదా ఖాతా నంబర్ తెలిసినంత మాత్రాన ఎవరూ డబ్బు తీసుకోలేరు. డబ్బు పంపడానికి మీ రహస్య ఓటీపీ లేదా యూపీఐ పిన్ తప్పనిసరిగా అవసరం. వాటిని ఎవరితోనూ పంచుకోకపోతే మీ డబ్బు సురక్షితం.',
     },
   },
   {
@@ -180,12 +182,14 @@ export const COMMON_QUESTIONS = [
     label: {
       en: 'Why do scammers create so much urgency and panic?',
       kn: 'ವಂಚಕರು ಅಷ್ಟು ತರಾತುರಿ ಮತ್ತು ಗಾಬರಿ ಏಕೆ ಹುಟ್ಟಿಸುತ್ತಾರೆ?',
-      hi: 'ठग इतनी जल्दीबाजी और घबराहಟ್ क्यों पैदा करते हैं?',
+      hi: 'ठग इतनी जल्दीबाजी और घबराहट क्यों पैदा करते हैं?',
+      te: 'మోసగాళ్లు ఎందుకు అంత కంగారు మరియు భయాన్ని కలిగిస్తారు?',
     },
     answer: {
       en: 'Scammers know that when humans are frightened (e.g., "Electricity cutoff tonight" or "Account suspended in 10 minutes"), we act without thinking. Their entire strategy is panic. The safest response is to pause, take a deep breath, and consult your children or trusted bank manager before doing anything.',
       kn: 'ಜನರು ಗಾಬರಿಯಾದಾಗ ಆಲೋಚಿಸದೆ ತಪ್ಪು ಮಾಡುತ್ತಾರೆ ಎಂದು ವಂಚಕರಿಗೆ ಚೆನ್ನಾಗಿ ತಿಳಿದಿದೆ. "ಇಂದೇ ರಾತ್ರಿ ವಿದ್ಯುತ್ ಕಟ್", "30 ನಿಮಿಷದಲ್ಲಿ ಖಾತೆ ಬಂದ್" ಎಂದು ಹೆದರಿಸುವುದೇ ಅವರ ತಂತ್ರ. ಅಂತಹ ಸಂದರ್ಭದಲ್ಲಿ ಗಾಬರಿಯಾಗದೆ, ಶಾಂತರಾಗಿ ನಿಮ್ಮ ಮಕ್ಕಳಿಗೆ ಅಥವಾ ಪರಿಚಿತ ಬ್ಯಾಂಕ್ ಶಾಖೆಗೆ ಕೇಳಿ ಪರಿಶೀಲಿಸಿ.',
       hi: 'ठग जानते हैं कि डर के माहौल में लोग बिना सोचे-समझे कदम उठाते हैं। "आज रात बिजली कटेगी" या "खाता ब्लॉक होगा" कहकर डराना ही उनका मुख्य हथियार है। जब भी कोई जल्दबाजी करे, रुकें, गहरी सांस लें और अपने परिवार या बैंक से सलाह लें।',
+      te: 'ప్రజలు భయపడినప్పుడు ఆలోచించకుండా తప్పులు చేస్తారని మోసగాళ్లకు తెలుసు. అందుకే వెంటనే కరెంట్ కట్ అవుతుంది లేదా ఖాతా రద్దవుతుంది అని భయపెడతారు. ఎల్లప్పుడూ ప్రశాంతంగా ఉండి మీ కుటుంబ సభ్యులతో మాట్లాడండి.',
     },
   },
   {
@@ -194,11 +198,13 @@ export const COMMON_QUESTIONS = [
       en: 'What is the Golden Rule of UPI payments?',
       kn: 'ಯುಪಿಐ ಪಾವತಿಯ ಸುವರ್ಣ ನಿಯಮ ಯಾವುದು?',
       hi: 'यूपीआई का स्वर्णिम नियम क्या है?',
+      te: 'యూపీఐ చెల్లింపుల గోల్డెన్ రూల్ ఏమిటి?',
     },
     answer: {
       en: 'The Golden Rule: Entering your UPI PIN ALWAYS transfers money OUT of your bank account. You NEVER need to enter a PIN to receive money, receive cashback, or claim a lottery. If someone says "Enter PIN to receive ₹2000", they are 100% lying.',
       kn: 'ಸುವರ್ಣ ನಿಯಮ: ಯುಪಿಐ ಪಿನ್ ಹಾಕಿದರೆ ಹಣ ನಿಮ್ಮ ಖಾತೆಯಿಂದ ಕಡಿತವಾಗುತ್ತದೆ. ಹಣ ಸ್ವೀಕರಿಸಲು, ಕ್ಯಾಶ್‌ಬ್ಯಾಕ್ ಪಡೆಯಲು ಅಥವಾ ಬಹುಮಾನ ಪಡೆಯಲು ಎಂದಿಗೂ ಪಿನ್ ಹಾಕಬೇಕಾಗಿಲ್ಲ! ಯಾರಾದರೂ "ಹಣ ಪಡೆಯಲು ಪಿನ್ ಹಾಕಿ" ಎಂದರೆ ಅದು 100% ಸುಳ್ಳು ಮತ್ತು ವಂಚನೆ.',
       hi: 'स्वर्णिम नियम: यूपीआई पिन डालने से हमेशा आपके खाते से पैसे कटते हैं। पैसे पाने या कैशबैक लेने के लिए कभी पिन डालने की जरूरत नहीं होती। यदि कोई कहे कि "पैसे पाने के लिए पिन डालो", तो वह 100% झूठ बोल रहा है।',
+      te: 'గోల్డెన్ రూల్: యూపీఐ పిన్ నమోదు చేస్తే మీ ఖాతా నుండి డబ్బు కట్ అవుతుంది. డబ్బును స్వీకరించడానికి ఎప్పుడూ పిన్ అవసరం లేదు!',
     },
   },
 ];

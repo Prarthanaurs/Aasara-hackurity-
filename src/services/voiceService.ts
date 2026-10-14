@@ -12,6 +12,8 @@ export class VoiceService {
         return 'kn-IN';
       case 'hi':
         return 'hi-IN';
+      case 'te':
+        return 'te-IN';
       case 'en':
       default:
         return 'en-IN';

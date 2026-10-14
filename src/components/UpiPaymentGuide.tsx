@@ -37,19 +37,19 @@ export const UpiPaymentGuide: React.FC = () => {
   // Trusted quick recipients
   const trustedRecipients = [
     {
-      name: { en: 'Daily Milkman', kn: 'ಹಾಲಿನ ವ್ಯಾಪಾರಿ', hi: 'दूधवाला' },
+      name: { en: 'Daily Milkman', kn: 'ಹಾಲಿನ ವ್ಯಾಪಾರಿ', hi: 'दूधवाला', te: 'పాల వ్యాపారి' },
       upi: 'milkman@upi',
     },
     {
-      name: { en: 'Medical Store', kn: 'ಔಷಧಿ ಅಂಗಡಿ', hi: 'दवा दुकान' },
+      name: { en: 'Medical Store', kn: 'ಔಷಧಿ ಅಂಗಡಿ', hi: 'दवा दुकान', te: 'మెడికల్ షాప్' },
       upi: 'pharmacy@okaxis',
     },
     {
-      name: { en: 'Kirana / Groceries', kn: 'ದಿನಸಿ ಅಂಗಡಿ', hi: 'किराना दुकान' },
+      name: { en: 'Kirana / Groceries', kn: 'ದಿನಸಿ ಅಂಗಡಿ', hi: 'किराना दुकान', te: 'కిరాణా షాప్' },
       upi: 'groceries@icici',
     },
     {
-      name: { en: 'Daughter / Son', kn: 'ಮಗಳು / ಮಗ', hi: 'बेटा / बेटी' },
+      name: { en: 'Daughter / Son', kn: 'ಮಗಳು / ಮಗ', hi: 'बेटा / बेटी', te: 'కుమార్తె / కుమారుడు' },
       upi: 'family@okhdfcbank',
     },
   ];
@@ -59,10 +59,10 @@ export const UpiPaymentGuide: React.FC = () => {
 
   // Quick purposes
   const quickPurposes = [
-    { en: 'Groceries & Food', kn: 'ದಿನಸಿ ಮತ್ತು ತರಕಾರಿ', hi: 'किराना और सब्जी' },
-    { en: 'Doctor & Medicine', kn: 'ಔಷಧಿ ಮತ್ತು ಆಸ್ಪತ್ರೆ', hi: 'दवाई और डॉक्टर' },
-    { en: 'Rent / Home Bill', kn: 'ಮನೆ ಬಾಡಿಗೆ / ಬಿಲ್', hi: 'किराया और बिजली बिल' },
-    { en: 'Family / Relatives', kn: 'ಕುಟುಂಬದ ನೆರವು', hi: 'पारिवारिक मदद' },
+    { en: 'Groceries & Food', kn: 'ದಿನಸಿ ಮತ್ತು ತರಕಾರಿ', hi: 'किराना और सब्जी', te: 'కిరాణా మరియు కూరగాయలు' },
+    { en: 'Doctor & Medicine', kn: 'ಔಷಧಿ ಮತ್ತು ಆಸ್ಪತ್ರೆ', hi: 'दवाई और डॉक्टर', te: 'మందులు మరియు డాక్టర్' },
+    { en: 'Rent / Home Bill', kn: 'ಮನೆ ಬಾಡಿಗೆ / ಬಿಲ್', hi: 'किराया और बिजली बिल', te: 'ఇంటి అద్దె / బిల్లు' },
+    { en: 'Family / Relatives', kn: 'ಕುಟುಂಬದ ನೆರವು', hi: 'पारिवारिक मदद', te: 'కుటుంబ సహాయం' },
   ];
 
   // Voice handler for Step 1

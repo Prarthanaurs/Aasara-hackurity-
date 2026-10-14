@@ -15,6 +15,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { TUTOR_SCENARIOS, COMMON_QUESTIONS } from '../services/tutorService';
 import { SpeakerButton } from './SpeakerButton';
 import { VoiceService } from '../services/voiceService';
+import { getLangText } from '../utils/langHelper';
 
 export const AiTutor: React.FC = () => {
   const { language, t, speak } = useLanguage();
@@ -146,8 +147,9 @@ export const AiTutor: React.FC = () => {
   };
 
   const handleQuickQuestionClick = (q: (typeof COMMON_QUESTIONS)[0]) => {
-    setUserQuery(q.label[language]);
-    handleSendQuery(q.label[language]);
+    const questionText = getLangText(q.label, language);
+    setUserQuery(questionText);
+    handleSendQuery(questionText);
   };
 
   return (
@@ -383,7 +385,7 @@ export const AiTutor: React.FC = () => {
                 onClick={() => handleQuickQuestionClick(q)}
                 className="text-xs sm:text-sm font-semibold p-2.5 rounded-xl bg-purple-50 text-purple-900 border border-purple-200 hover:bg-purple-100 text-left cursor-pointer"
               >
-                {q.label[language]}
+                {getLangText(q.label, language)}
               </button>
             ))}
           </div>

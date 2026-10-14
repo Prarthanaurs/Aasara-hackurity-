@@ -1,8 +1,8 @@
-import type { CheckResult, Language } from '../types';
+import type { CheckResult } from '../types';
 
 export interface SampleMessage {
   id: string;
-  label: Record<Language, string>;
+  label: Record<string, string>;
   category: string;
   text: string;
 }
@@ -63,8 +63,8 @@ export const SAMPLE_MESSAGES: SampleMessage[] = [
 export class CheckerService {
   public static analyzeMessage(rawText: string): CheckResult {
     const text = rawText.trim().toLowerCase();
-    const matchedReasons: Array<{ icon: string; text: Record<Language, string> }> = [];
-    const actionAdvice: Array<{ text: Record<Language, string>; isImportant?: boolean }> = [];
+    const matchedReasons: Array<{ icon: string; text: Record<string, string> }> = [];
+    const actionAdvice: Array<{ text: Record<string, string>; isImportant?: boolean }> = [];
     const matchedKeywords: string[] = [];
 
     let riskScore = 0; // 0 = safe, 100 = extreme danger

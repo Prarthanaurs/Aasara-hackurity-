@@ -40,11 +40,13 @@ export const EmergencySupport: React.FC = () => {
         en: 'Transaction ID / UTR Number',
         kn: 'ವಹಿವಾಟಿನ ಯುಟಿಆರ್ (UTR) ಅಥವಾ ರೆಫರೆನ್ಸ್ ಸಂಖ್ಯೆ',
         hi: 'लेनदेन का यूटीआर (UTR) या रेफरेंस नंबर',
+        te: 'లావాదేవీ యుటిఆర్ (UTR) లేదా రిఫరెన్స్ నంబర్',
       },
       desc: {
         en: 'Look at the bank debit SMS you received. It will contain a 12-digit UTR number.',
         kn: 'ನಿಮ್ಮ ಮೊಬೈಲ್‌ಗೆ ಬಂದ ಹಣ ಕಡಿತವಾದ ಬ್ಯಾಂಕ್ ಎಸ್‌ಎಂಎಸ್‌ನಲ್ಲಿ 12 ಅಂಕಿಯ ಯುಟಿಆರ್ ಸಂಖ್ಯೆ ಇರುತ್ತದೆ.',
         hi: 'बैंक से आए पैसे कटने वाले मैसेज में 12 अंकों का यूटीआर नंबर होता है।',
+        te: 'డబ్బులు కట్ అయిన బ్యాంక్ ఎస్ఎంఎస్ లో 12 అంకెల యుటిఆర్ నంబర్ ఉంటుంది.',
       },
     },
     {
@@ -53,11 +55,13 @@ export const EmergencySupport: React.FC = () => {
         en: 'Your Bank Account Number',
         kn: 'ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಖಾತೆ ಸಂಖ್ಯೆ',
         hi: 'आपका बैंक खाता नंबर',
+        te: 'మీ బ్యాంక్ ఖాతా సంఖ్య',
       },
       desc: {
         en: 'The account or debit card from which money was deducted.',
         kn: 'ಯಾವ ಖಾತೆಯಿಂದ ಹಣ ಕಡಿತಗೊಂಡಿದೆಯೋ ಆ ಖಾತೆ ಸಂಖ್ಯೆ ಅಥವಾ ಪಾಸ್‌ಬುಕ್.',
         hi: 'जिस खाते या एटीएम कार्ड से पैसे कटे हैं, उसका नंबर।',
+        te: 'డబ్బులు కట్ అయిన మీ బ్యాంక్ ఖాతా లేదా ఏటీఎం కార్డు నంబర్.',
       },
     },
     {
@@ -66,11 +70,13 @@ export const EmergencySupport: React.FC = () => {
         en: 'Scammer Contact / UPI ID / Link',
         kn: 'ವಂಚಕನ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ, ಯುಪಿಐ ಐಡಿ ಅಥವಾ ಲಿಂಕ್',
         hi: 'ठग का मोबाइल नंबर, यूपीआई आईडी या लिंक',
+        te: 'మోసగాడి మొబైల్ నంబర్ లేదా యూపీఐ ఐడీ',
       },
       desc: {
         en: 'The phone number that called you or the link you received.',
         kn: 'ನಿಮಗೆ ಕರೆ ಮಾಡಿದ ನಂಬರ್ ಅಥವಾ ವಾಟ್ಸಾಪ್ ಸಂದೇಶ.',
         hi: 'जिस नंबर से कॉल आया था या व्हाट्सएप पर मैसेज भेजा गया था।',
+        te: 'మీకు కాల్ చేసిన నంబర్ లేదా వచ్చిన లింక్.',
       },
     },
     {
@@ -79,11 +85,13 @@ export const EmergencySupport: React.FC = () => {
         en: 'Exact Date & Time',
         kn: 'ನಿಖರವಾದ ದಿನಾಂಕ ಮತ್ತು ಸಮಯ',
         hi: 'सटीक तारीख और समय',
+        te: 'ఖచ్చితమైన తేదీ మరియు సమయం',
       },
       desc: {
         en: 'Note down the exact time shown on your debit alert.',
         kn: 'ಹಣ ಕಡಿತಗೊಂಡ ನಿಖರವಾದ ಸಮಯವನ್ನು ಬರೆದಿಟ್ಟುಕೊಳ್ಳಿ.',
         hi: 'पैसे कटने के एसएमएस पर दिया गया सही समय नोट करें।',
+        te: 'డబ్బు కట్ అయిన సమయాన్ని నోట్ చేసుకోండి.',
       },
     },
   ];

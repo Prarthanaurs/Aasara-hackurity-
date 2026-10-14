@@ -12,6 +12,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { EDUCATIONAL_LESSONS } from '../services/lessonService';
 import { SpeakerButton } from './SpeakerButton';
 import { VoiceService } from '../services/voiceService';
+import { getLangText } from '../utils/langHelper';
 
 export const EducationalLessons: React.FC = () => {
   const { language, t, speak } = useLanguage();
@@ -33,11 +34,13 @@ export const EducationalLessons: React.FC = () => {
         en: 'Scene 1: An unexpected panic call arrives',
         kn: 'ದೃಶ್ಯ ೧: ಆತಂಕದ ಅನಿರೀಕ್ಷಿತ ಕರೆ ಬರುತ್ತದೆ',
         hi: 'दृश्य १: अचानक घबराहट भरी कॉल आती है',
+        te: 'దృశ్యం 1: అకస్మాత్తుగా కంగారు పెట్టే కాల్ వస్తుంది',
       },
       subtitle: {
         en: 'A voice says: "Your electricity will be cut off in 30 minutes! Pay ₹10 now!"',
         kn: 'ಕರೆ ಮಾಡಿದವನು ಹೇಳುತ್ತಾನೆ: "30 ನಿಮಿಷದಲ್ಲಿ ನಿಮ್ಮ ಕರೆಂಟ್ ಕಟ್ ಆಗುತ್ತದೆ! ಈಗಲೇ ₹10 ಕಟ್ಟಿ!"',
         hi: 'एक आवाज़ कहती है: "30 मिनट में बिजली कट जाएगी! अभी ₹10 भरें!"',
+        te: 'ఒక గొంతు అంటుంది: "30 నిమిషాల్లో మీ కరెంట్ కట్ అవుతుంది! ఇప్పుడే ₹10 చెల్లించండి!"',
       },
       visual: '⚡📞',
     },
@@ -48,11 +51,13 @@ export const EducationalLessons: React.FC = () => {
         en: 'Scene 2: The Golden Rule kicks in',
         kn: 'ದೃಶ್ಯ ೨: ಸುವರ್ಣ ನಿಯಮವನ್ನು ನೆನಪಿಸಿಕೊಳ್ಳಿ',
         hi: 'दृश्य २: स्वर्णिम नियम याद आता है',
+        te: 'దృశ్యం 2: గోల్డెన్ రూల్ గుర్తుకు వస్తుంది',
       },
       subtitle: {
         en: 'Pause. Take a deep breath. Utility boards never disconnect power without physical legal notice.',
         kn: 'ಶಾಂತರಾಗಿ. ದೀರ್ಘ ಉಸಿರು ತೆಗೆದುಕೊಳ್ಳಿ. ವಿದ್ಯುತ್ ಇಲಾಖೆ ಲಿಖಿತ ನೋಟಿಸ್ ನೀಡದೆ ರಾತ್ರಿ ಸಂಪರ್ಕ ಕಡಿತಗೊಳಿಸುವುದಿಲ್ಲ.',
         hi: 'रुकें। गहरी सांस लें। बिजली विभाग बिना लिखित नोटिस के कभी फोन पर लाइन नहीं काटता।',
+        te: 'ఆగండి. ప్రశాంతంగా ఉండండి. విద్యుత్ బోర్డులు నోటీసు లేకుండా రాత్రికి రాత్రే విద్యుత్‌ను కట్ చేయవు.',
       },
       visual: '🧘‍♂️🛑',
     },
@@ -63,11 +68,13 @@ export const EducationalLessons: React.FC = () => {
         en: 'Scene 3: Never share OTP or PIN to receive money',
         kn: 'ದೃಶ್ಯ ೩: ಹಣ ಪಡೆಯಲು ಒಟಿಪಿ ಅಥವಾ ಪಿನ್ ಎಂದಿಗೂ ಹಾಕಬೇಡಿ',
         hi: 'दृश्य ३: पैसे पाने के लिए कभी ओटीपी या पिन न दें',
+        te: 'దృశ్యం 3: డబ్బు పొందడానికి ఓటీపీ లేదా పిన్ ఎప్పుడూ ఇవ్వవద్దు',
       },
       subtitle: {
         en: 'Entering UPI PIN ALWAYS transfers money out of your bank. You are in control.',
         kn: 'ಯುಪಿಐ ಪಿನ್ ಹಾಕಿದರೆ ನಿಮ್ಮ ಖಾತೆಯಿಂದ ಹಣ ಕಡಿತವಾಗುತ್ತದೆ! ನಿಮ್ಮ ಹಣವನ್ನು ನೀವೇ ಕಾಪಾಡಿಕೊಳ್ಳಿ.',
         hi: 'यूपीआई पिन डालने से हमेशा आपके खाते से पैसे कटते हैं। नियंत्रण आपके हाथ में है।',
+        te: 'యూపీఐ పిన్ నమోదు చేస్తే మీ ఖాతా నుండి డబ్బు కట్ అవుతుంది. నియంత్రణ మీ చేతుల్లోనే ఉంది.',
       },
       visual: '🔒🛡️',
     },
@@ -78,11 +85,13 @@ export const EducationalLessons: React.FC = () => {
         en: 'Scene 4: Financial Emergency? Dial 1930',
         kn: 'ದೃಶ್ಯ ೪: ತುರ್ತು ವಂಚನೆಯಾದರೆ? 1930 ಗೆ ಕರೆ ಮಾಡಿ',
         hi: 'दृश्य ४: धोखाधड़ी होने पर? 1930 डायल करें',
+        te: 'దృశ్యం 4: అత్యవసర మోసం జరిగితే? 1930 కు కాల్ చేయండి',
       },
       subtitle: {
         en: 'Dial 1930 within the Golden 2 Hours to freeze the scammer account. Stay safe with Aasara!',
         kn: 'ಮೊದಲ 2 ಗಂಟೆಯೊಳಗೆ 1930 ಗೆ ಕರೆ ಮಾಡಿ ವಂಚಕರ ಖಾತೆ ಸ್ಥಗಿತಗೊಳಿಸಿ. ಆಸರಾದೊಂದಿಗೆ ಸುರಕ್ಷಿತವಾಗಿರಿ!',
         hi: 'पहले 2 घंटों में 1930 पर कॉल करें ताकि ठग का खाता फ्रीज हो सके। आसरा के साथ सुरक्षित रहें!',
+        te: 'గోల్డెన్ 2 గంటల్లోపు 1930 కు కాల్ చేసి మోసగాడి ఖాతాను ఫ్రీజ్ చేయండి. ఆసరాతో సురక్షితంగా ఉండండి!',
       },
       visual: '🚨🎉',
     },
@@ -289,10 +298,10 @@ export const EducationalLessons: React.FC = () => {
               }`}
             >
               <span className="text-xs uppercase opacity-80 block">
-                {lesson.category[language]}
+                {getLangText(lesson.category, language)}
               </span>
               <span className="text-base sm:text-lg line-clamp-1">
-                {lesson.title[language]}
+                {getLangText(lesson.title, language)}
               </span>
             </button>
           ))}
@@ -302,11 +311,11 @@ export const EducationalLessons: React.FC = () => {
         <div className="p-6 bg-teal-50/60 rounded-3xl border-2 border-teal-200 space-y-5">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl font-black text-teal-950">
-              {activeLesson.title[language]}
+              {getLangText(activeLesson.title, language)}
             </h3>
             <SpeakerButton
-              textToSpeak={`${activeLesson.title[language]}. ${activeLesson.summary[language]}. ${activeLesson.keyRules
-                .map((r) => r[language])
+              textToSpeak={`${getLangText(activeLesson.title, language)}. ${getLangText(activeLesson.summary, language)}. ${activeLesson.keyRules
+                .map((r) => getLangText(r, language))
                 .join('. ')}`}
               id={`lesson-speak-${activeLesson.id}`}
               size="md"
@@ -314,7 +323,7 @@ export const EducationalLessons: React.FC = () => {
           </div>
 
           <p className="text-lg font-semibold text-slate-800">
-            {activeLesson.summary[language]}
+            {getLangText(activeLesson.summary, language)}
           </p>
 
           {/* Key Rules Cards */}
@@ -324,6 +333,8 @@ export const EducationalLessons: React.FC = () => {
                 ? 'ಮುಖ್ಯ ನಿಯಮಗಳು:'
                 : language === 'hi'
                 ? 'मुख्य सुरक्षा नियम:'
+                : language === 'te'
+                ? 'ముఖ్యమైన భద్రతా నియమాలు:'
                 : 'Key Safety Rules to Remember:'}
             </h4>
 
@@ -337,7 +348,7 @@ export const EducationalLessons: React.FC = () => {
                     ✓
                   </span>
                   <p className="text-base sm:text-lg font-medium text-slate-900">
-                    {rule[language]}
+                    {getLangText(rule, language)}
                   </p>
                 </div>
               ))}
@@ -354,7 +365,7 @@ export const EducationalLessons: React.FC = () => {
             </div>
 
             <p className="text-base sm:text-lg font-bold text-slate-800">
-              {activeLesson.quizQuestion.question[language]}
+              {getLangText(activeLesson.quizQuestion.question, language)}
             </p>
 
             <div className="grid gap-2.5">
@@ -383,7 +394,7 @@ export const EducationalLessons: React.FC = () => {
                       <span className="w-6 h-6 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-black shrink-0 mt-0.5">
                         {String.fromCharCode(65 + oIdx)}
                       </span>
-                      <span>{opt[language]}</span>
+                      <span>{getLangText(opt, language)}</span>
                     </div>
                   </button>
                 );
@@ -392,7 +403,7 @@ export const EducationalLessons: React.FC = () => {
 
             {quizSubmitted[activeLesson.id] && (
               <div className="p-4 bg-teal-50 rounded-2xl border border-teal-300 text-teal-950 font-bold text-base animate-fadeIn">
-                <p>💡 {activeLesson.quizQuestion.explanation[language]}</p>
+                <p>💡 {getLangText(activeLesson.quizQuestion.explanation, language)}</p>
               </div>
             )}
           </div>

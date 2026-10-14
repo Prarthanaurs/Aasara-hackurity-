@@ -1,190 +1,247 @@
-import React from 'react';
-import { Shield, PhoneCall, Volume2, UserCheck, Eye } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Sun,
+  Moon,
+  ChevronDown,
+  Volume2,
+  PhoneCall,
+  UserCheck,
+} from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import type { Language, FontSize } from '../types';
+import type { Language } from '../types';
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  currentTab: string;
+  onTabChange: (tab: any) => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
   const {
     language,
     setLanguage,
-    fontSize,
-    setFontSize,
-    highContrast,
-    setHighContrast,
+    themeMode,
+    toggleTheme,
     t,
     speak,
     setIsHelpModalOpen,
+    setShowOnboarding,
   } = useLanguage();
 
-  const languages: Array<{ code: Language; label: string; nativeName: string; audioText: string }> = [
-    {
-      code: 'kn',
-      label: 'Kannada',
-      nativeName: 'ಕನ್ನಡ',
-      audioText: 'ಕನ್ನಡ ಭಾಷೆ. ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ.',
-    },
-    {
-      code: 'hi',
-      label: 'Hindi',
-      nativeName: 'हिन्दी',
-      audioText: 'हिन्दी भाषा। यहाँ क्लिक करें।',
-    },
-    {
-      code: 'en',
-      label: 'English',
-      nativeName: 'English',
-      audioText: 'English language. Click here.',
-    },
+  const [langMenuOpen, setLangMenuOpen] = useState<boolean>(false);
+
+  const languages: Array<{
+    code: Language;
+    label: string;
+    nativeName: string;
+    audioText: string;
+  }> = [
+    { code: 'en', label: 'English', nativeName: 'English', audioText: 'English' },
+    { code: 'kn', label: 'Kannada', nativeName: 'ಕನ್ನಡ', audioText: 'ಕನ್ನಡ' },
+    { code: 'hi', label: 'Hindi', nativeName: 'हिंदी', audioText: 'हिन्दी' },
+    { code: 'te', label: 'Telugu', nativeName: 'తెలుగు', audioText: 'తెలుగు' },
   ];
 
+  const currentLangObj = languages.find((l) => l.code === language) || languages[0];
+
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm transition-colors duration-200">
-      {/* Top emergency strip */}
-      <div className="bg-red-700 text-white px-3 py-1.5 flex flex-wrap items-center justify-between text-sm sm:text-base font-semibold">
+    <header className="sticky top-0 z-50 bg-[#1f140e]/95 backdrop-blur border-b border-amber-900/40 shadow-md">
+      {/* Top 1930 Emergency Strip */}
+      <div className="bg-[#991b1b] text-white px-4 py-1 flex items-center justify-between text-xs sm:text-sm font-bold">
         <a
           href="tel:1930"
-          className="flex items-center gap-2 hover:underline focus:outline-none focus:ring-2 focus:ring-white rounded px-1"
-          aria-label={t.emergencyBadge[language]}
+          className="flex items-center gap-2 hover:underline"
+          title="National Cyber Crime Helpline"
         >
-          <PhoneCall className="w-5 h-5 animate-pulse text-amber-300" />
+          <PhoneCall className="w-4 h-4 animate-pulse text-amber-300" />
           <span>{t.emergencyBadge[language]}</span>
         </a>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setIsHelpModalOpen(true)}
-            className="flex items-center gap-1.5 bg-red-800 hover:bg-red-900 px-3 py-1 rounded-full text-xs sm:text-sm font-medium border border-red-500 cursor-pointer"
+            className="flex items-center gap-1.5 bg-black/20 hover:bg-black/30 px-3 py-0.5 rounded-full text-xs font-semibold cursor-pointer"
           >
-            <UserCheck className="w-4 h-4 text-emerald-300" />
+            <UserCheck className="w-3.5 h-3.5 text-emerald-300" />
             <span>{t.needHelp[language]}</span>
           </button>
         </div>
       </div>
 
-      {/* Main app bar */}
-      <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        {/* Brand */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-800 flex items-center justify-center text-white shadow-md">
-              <Shield className="w-7 h-7 text-amber-300" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl font-black tracking-tight text-blue-900">
-                  {t.appName[language]}
-                </span>
-                <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 bg-amber-100 text-amber-800 rounded-full border border-amber-300">
-                  Elder Safe
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm font-medium text-slate-600 line-clamp-1">
-                {t.tagline[language]}
-              </p>
-            </div>
+      {/* Main Bar matching Image 2 */}
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        {/* Brand with Grandmother Avatar */}
+        <div
+          onClick={() => onTabChange('home')}
+          className="flex items-center gap-3 cursor-pointer group select-none"
+        >
+          {/* Grandmother Avatar */}
+          <div className="w-11 h-11 rounded-full bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center overflow-hidden shrink-0 shadow">
+            <svg
+              viewBox="0 0 100 100"
+              className="w-10 h-10 transform scale-110"
+              aria-label="Aasara Grandmother Mascot"
+            >
+              {/* Saree/Shawl background */}
+              <circle cx="50" cy="50" r="48" fill="#f59e0b" />
+              {/* Saree Drape */}
+              <path d="M15 88 Q50 68 85 88" fill="#ea580c" />
+              {/* Face */}
+              <circle cx="50" cy="46" r="28" fill="#fed7aa" />
+              {/* Silver hair bun */}
+              <ellipse cx="50" cy="24" rx="26" ry="16" fill="#e2e8f0" />
+              <circle cx="50" cy="12" r="10" fill="#cbd5e1" />
+              {/* Spectacles */}
+              <circle cx="42" cy="45" r="7" fill="none" stroke="#78350f" strokeWidth="2.5" />
+              <circle cx="58" cy="45" r="7" fill="none" stroke="#78350f" strokeWidth="2.5" />
+              <line x1="49" y1="45" x2="51" y2="45" stroke="#78350f" strokeWidth="2.5" />
+              {/* Eyes */}
+              <circle cx="42" cy="45" r="2.5" fill="#451a03" />
+              <circle cx="58" cy="45" r="2.5" fill="#451a03" />
+              {/* Red Bindi */}
+              <circle cx="50" cy="36" r="2.5" fill="#dc2626" />
+              {/* Kind Smile */}
+              <path d="M43 56 Q50 63 57 56" fill="none" stroke="#9a3412" strokeWidth="2.5" strokeLinecap="round" />
+            </svg>
           </div>
 
-          {/* Quick speech guidance button for seniors */}
-          <button
-            onClick={() =>
-              speak(
-                language === 'kn'
-                  ? 'ಆಸರಾ ಆ್ಯಪ್‌ಗೆ ಸುಸ್ವಾಗತ. ಇದು ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಭದ್ರತೆಯ ಆಪ್ತ ಸ್ನೇಹಿತ.'
-                  : language === 'hi'
-                  ? 'आसरा ऐप में आपका स्वागत है। यह आपकी डिजिटल सुरक्षा का सच्चा साथी है।'
-                  : 'Welcome to Aasara. Your companion for safe digital payments and cyber safety.',
-                'nav-welcome'
-              )
-            }
-            aria-label="Welcome audio guidance"
-            className="md:hidden p-2.5 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200"
-          >
-            <Volume2 className="w-6 h-6" />
-          </button>
+          <div>
+            <span className="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight group-hover:text-amber-400 transition-colors">
+              Aasara
+            </span>
+          </div>
         </div>
 
-        {/* Accessibility & Language Bar */}
-        <div className="flex flex-wrap items-center justify-between md:justify-end gap-2 sm:gap-3">
-          {/* Trilingual Selector with preview speaker buttons */}
-          <div
-            role="group"
-            aria-label={t.languageSelection.title[language]}
-            className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-300"
+        {/* Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-1 text-sm font-bold text-stone-300">
+          <button
+            onClick={() => onTabChange('home')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'home'
+                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-200'
+            }`}
           >
-            {languages.map((langItem) => {
-              const isSelected = language === langItem.code;
-              return (
-                <div key={langItem.code} className="flex items-center">
+            {t.nav.home[language]}
+          </button>
+
+          <button
+            onClick={() => onTabChange('checker')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'checker'
+                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-200'
+            }`}
+          >
+            {t.nav.checkMessage[language]}
+          </button>
+
+          <button
+            onClick={() => onTabChange('payment')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'payment'
+                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-200'
+            }`}
+          >
+            {t.nav.paySafely[language]}
+          </button>
+
+          <button
+            onClick={() => onTabChange('emergency')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'emergency'
+                ? 'text-red-400 bg-red-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-red-300'
+            }`}
+          >
+            {t.nav.urgentHelp[language]}
+          </button>
+
+          <button
+            onClick={() => onTabChange('tutor')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'tutor'
+                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-200'
+            }`}
+          >
+            {t.nav.tutor[language]}
+          </button>
+
+          <button
+            onClick={() => onTabChange('lessons')}
+            className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
+              currentTab === 'lessons'
+                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-200'
+            }`}
+          >
+            {t.nav.lessons[language]}
+          </button>
+        </nav>
+
+        {/* Right side controls: Language Dropdown + Theme Toggle */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Language Switcher Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2a1a11] border border-amber-600/40 text-amber-200 text-sm font-bold hover:bg-[#382317] transition-all cursor-pointer"
+            >
+              <span>{currentLangObj.nativeName}</span>
+              <ChevronDown className="w-4 h-4 opacity-70" />
+            </button>
+
+            {langMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-[#251710] border-2 border-amber-600/60 rounded-2xl shadow-2xl py-2 z-50 animate-fadeIn">
+                <div className="px-3 py-1 text-xs font-bold text-amber-500 border-b border-white/10 mb-1">
+                  Choose Language / ಭಾಷೆ
+                </div>
+                {languages.map((l) => (
                   <button
-                    type="button"
+                    key={l.code}
                     onClick={() => {
-                      setLanguage(langItem.code);
-                      speak(langItem.audioText, `lang-${langItem.code}`);
+                      setLanguage(l.code);
+                      setLangMenuOpen(false);
+                      speak(l.audioText, `nav-lang-${l.code}`);
                     }}
-                    className={`px-3 py-1.5 rounded-xl text-sm sm:text-base font-bold transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-blue-700 text-white shadow-sm ring-2 ring-blue-400'
-                        : 'text-slate-700 hover:bg-slate-200'
+                    className={`w-full px-4 py-2 text-left text-sm font-bold flex items-center justify-between hover:bg-[#382317] cursor-pointer ${
+                      language === l.code ? 'text-orange-400 bg-amber-500/10' : 'text-stone-200'
                     }`}
                   >
-                    {langItem.nativeName}
+                    <span>{l.nativeName} ({l.label})</span>
+                    <Volume2 className="w-4 h-4 opacity-60" />
                   </button>
+                ))}
 
-                  {/* Speaker icon beside each language choice to hear option */}
+                {/* Button to open the full onboarding screen */}
+                <div className="pt-1 mt-1 border-t border-white/10 px-2">
                   <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      speak(langItem.audioText, `audio-preview-${langItem.code}`);
+                    onClick={() => {
+                      setShowOnboarding(true);
+                      setLangMenuOpen(false);
                     }}
-                    title={`Hear ${langItem.label}`}
-                    aria-label={`Hear ${langItem.label} audio`}
-                    className="p-1 text-slate-500 hover:text-blue-700 hover:bg-slate-200 rounded-lg mr-1 cursor-pointer"
+                    className="w-full text-xs font-semibold py-1.5 px-2 text-center text-amber-400 hover:underline cursor-pointer"
                   >
-                    <Volume2 className="w-3.5 h-3.5" />
+                    Open Language Screen
                   </button>
                 </div>
-              );
-            })}
+              </div>
+            )}
           </div>
 
-          {/* Accessibility controls: Font Scale & High Contrast */}
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-300">
-            {/* Font scaling */}
-            <div className="flex items-center gap-0.5" title={t.textSize[language]}>
-              {(['normal', 'large', 'xlarge'] as FontSize[]).map((size) => (
-                <button
-                  key={size}
-                  onClick={() => setFontSize(size)}
-                  className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs cursor-pointer ${
-                    fontSize === size
-                      ? 'bg-indigo-700 text-white shadow-sm'
-                      : 'text-slate-700 hover:bg-slate-200'
-                  }`}
-                  aria-label={`Set text size ${size}`}
-                >
-                  {size === 'normal' ? 'A' : size === 'large' ? 'A+' : 'A++'}
-                </button>
-              ))}
-            </div>
-
-            <div className="h-5 w-px bg-slate-300 mx-0.5" />
-
-            {/* High Contrast Toggle */}
-            <button
-              onClick={() => setHighContrast(!highContrast)}
-              className={`p-1.5 rounded-lg flex items-center gap-1 text-xs font-semibold cursor-pointer ${
-                highContrast
-                  ? 'bg-amber-400 text-black ring-2 ring-amber-500'
-                  : 'text-slate-700 hover:bg-slate-200'
-              }`}
-              title={t.highContrast[language]}
-              aria-label={t.highContrast[language]}
-            >
-              <Eye className="w-4 h-4" />
-              <span className="hidden sm:inline">{t.highContrast[language]}</span>
-            </button>
-          </div>
+          {/* Theme Toggle Sun Icon Button matching Image 2 */}
+          <button
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full bg-[#2a1a11] border border-amber-600/40 text-amber-400 hover:text-amber-200 hover:bg-[#382317] flex items-center justify-center transition-all cursor-pointer shadow"
+            title="Toggle Theme"
+          >
+            {themeMode === 'light' ? (
+              <Moon className="w-5 h-5" />
+            ) : (
+              <Sun className="w-5 h-5 text-amber-400" />
+            )}
+          </button>
         </div>
       </div>
     </header>

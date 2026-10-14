@@ -1,6 +1,8 @@
-export type Language = 'en' | 'kn' | 'hi';
+export type Language = 'en' | 'kn' | 'hi' | 'te';
 
 export type FontSize = 'normal' | 'large' | 'xlarge';
+
+export type ThemeMode = 'dark' | 'light' | 'contrast';
 
 export interface TrustedContact {
   name: string;
@@ -12,14 +14,14 @@ export type ScanRiskLevel = 'safe' | 'caution' | 'danger';
 
 export interface CheckResult {
   riskLevel: ScanRiskLevel;
-  title: Record<Language, string>;
-  summary: Record<Language, string>;
+  title: Record<string, string>;
+  summary: Record<string, string>;
   reasons: Array<{
     icon: string;
-    text: Record<Language, string>;
+    text: Record<string, string>;
   }>;
   actionAdvice: Array<{
-    text: Record<Language, string>;
+    text: Record<string, string>;
     isImportant?: boolean;
   }>;
   matchedKeywords?: string[];
@@ -37,27 +39,27 @@ export interface PaymentDetails {
 
 export interface EducationalLesson {
   id: string;
-  title: Record<Language, string>;
-  category: Record<Language, string>;
+  title: Record<string, string>;
+  category: Record<string, string>;
   readTime: string;
-  summary: Record<Language, string>;
-  keyRules: Array<Record<Language, string>>;
+  summary: Record<string, string>;
+  keyRules: Array<Record<string, string>>;
   quizQuestion: {
-    question: Record<Language, string>;
-    options: Array<Record<Language, string>>;
+    question: Record<string, string>;
+    options: Array<Record<string, string>>;
     correctIndex: number;
-    explanation: Record<Language, string>;
+    explanation: Record<string, string>;
   };
 }
 
 export interface TutorScenario {
   id: string;
-  title: Record<Language, string>;
-  scammerMessage: Record<Language, string>;
-  scammerAudioText: Record<Language, string>;
+  title: Record<string, string>;
+  scammerMessage: Record<string, string>;
+  scammerAudioText: Record<string, string>;
   options: Array<{
-    text: Record<Language, string>;
+    text: Record<string, string>;
     isSafe: boolean;
-    feedback: Record<Language, string>;
+    feedback: Record<string, string>;
   }>;
 }
