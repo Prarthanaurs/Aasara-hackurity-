@@ -85,13 +85,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 text-sm font-bold text-stone-300">
+        <nav className="hidden lg:flex items-center gap-1 text-sm font-bold text-stone-700 dark:text-stone-300">
           <button
             onClick={() => onTabChange('home')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'home'
-                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-amber-200'
+                ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-700 dark:hover:text-amber-200'
             }`}
           >
             {t.nav.home[language]}
@@ -101,8 +101,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             onClick={() => onTabChange('checker')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'checker'
-                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-amber-200'
+                ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-700 dark:hover:text-amber-200'
             }`}
           >
             {t.nav.checkMessage[language]}
@@ -112,8 +112,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             onClick={() => onTabChange('payment')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'payment'
-                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-amber-200'
+                ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-700 dark:hover:text-amber-200'
             }`}
           >
             {t.nav.paySafely[language]}
@@ -123,8 +123,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             onClick={() => onTabChange('emergency')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'emergency'
-                ? 'text-red-400 bg-red-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-red-300'
+                ? 'text-red-600 dark:text-red-400 bg-red-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-red-700 dark:hover:text-red-300'
             }`}
           >
             {t.nav.urgentHelp[language]}
@@ -134,8 +134,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             onClick={() => onTabChange('tutor')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'tutor'
-                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-amber-200'
+                ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-700 dark:hover:text-amber-200'
             }`}
           >
             {t.nav.tutor[language]}
@@ -145,8 +145,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             onClick={() => onTabChange('lessons')}
             className={`px-3 py-2 rounded-xl transition-all cursor-pointer ${
               currentTab === 'lessons'
-                ? 'text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
-                : 'hover:text-amber-200'
+                ? 'text-amber-600 dark:text-amber-400 bg-amber-500/10 underline underline-offset-8 decoration-2'
+                : 'hover:text-amber-700 dark:hover:text-amber-200'
             }`}
           >
             {t.nav.lessons[language]}
@@ -157,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Font Size Accessibility Controls: A, A+, A++ */}
           <div
-            className="flex items-center gap-0.5 bg-[#2a1a11] border border-amber-600/40 rounded-xl p-1"
+            className="flex items-center gap-0.5 bg-stone-100 dark:bg-[#2a1a11] border border-stone-300 dark:border-amber-600/40 rounded-xl p-1 shadow-sm"
             title="Text Size (A, A+, A++)"
             aria-label="Text Size Selector"
           >
@@ -169,7 +169,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
                 className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-black text-xs sm:text-sm flex items-center justify-center cursor-pointer transition-all ${
                   fontSize === size
                     ? 'bg-orange-600 text-white shadow ring-2 ring-orange-400/50'
-                    : 'text-amber-200/80 hover:text-white hover:bg-white/10'
+                    : 'text-stone-700 dark:text-amber-200/80 hover:text-stone-900 dark:hover:text-white hover:bg-stone-200 dark:hover:bg-white/10'
                 }`}
                 title={`Font Size ${size === 'normal' ? 'Normal' : size === 'large' ? 'Large' : 'Extra Large'}`}
                 aria-label={`Set font size to ${size}`}
@@ -183,15 +183,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
           <div className="relative">
             <button
               onClick={() => setLangMenuOpen(!langMenuOpen)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2a1a11] border border-amber-600/40 text-amber-200 text-sm font-bold hover:bg-[#382317] transition-all cursor-pointer"
+              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-stone-100 dark:bg-[#2a1a11] border border-stone-300 dark:border-amber-600/40 text-stone-900 dark:text-amber-200 text-sm font-bold hover:bg-stone-200 dark:hover:bg-[#382317] transition-all cursor-pointer shadow-sm"
             >
               <span>{currentLangObj.nativeName}</span>
               <ChevronDown className="w-4 h-4 opacity-70" />
             </button>
 
             {langMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#251710] border-2 border-amber-600/60 rounded-2xl shadow-2xl py-2 z-50 animate-fadeIn">
-                <div className="px-3 py-1 text-xs font-bold text-amber-500 border-b border-white/10 mb-1">
+              <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#251710] border-2 border-stone-300 dark:border-amber-600/60 rounded-2xl shadow-2xl py-2 z-50 animate-fadeIn">
+                <div className="px-3 py-1 text-xs font-bold text-amber-700 dark:text-amber-500 border-b border-stone-200 dark:border-white/10 mb-1">
                   Choose Language / ಭಾಷೆ
                 </div>
                 {languages.map((l) => (
@@ -202,8 +202,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
                       setLangMenuOpen(false);
                       speak(l.audioText, `nav-lang-${l.code}`);
                     }}
-                    className={`w-full px-4 py-2 text-left text-sm font-bold flex items-center justify-between hover:bg-[#382317] cursor-pointer ${
-                      language === l.code ? 'text-orange-400 bg-amber-500/10' : 'text-stone-200'
+                    className={`w-full px-4 py-2 text-left text-sm font-bold flex items-center justify-between hover:bg-stone-100 dark:hover:bg-[#382317] cursor-pointer ${
+                      language === l.code ? 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-amber-500/10' : 'text-stone-800 dark:text-stone-200'
                     }`}
                   >
                     <span>{l.nativeName} ({l.label})</span>
@@ -212,13 +212,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
                 ))}
 
                 {/* Button to open the full onboarding screen */}
-                <div className="pt-1 mt-1 border-t border-white/10 px-2">
+                <div className="pt-1 mt-1 border-t border-stone-200 dark:border-white/10 px-2">
                   <button
                     onClick={() => {
                       setShowOnboarding(true);
                       setLangMenuOpen(false);
                     }}
-                    className="w-full text-xs font-semibold py-1.5 px-2 text-center text-amber-400 hover:underline cursor-pointer"
+                    className="w-full text-xs font-semibold py-1.5 px-2 text-center text-amber-700 dark:text-amber-400 hover:underline cursor-pointer"
                   >
                     Open Language Screen
                   </button>
@@ -230,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
           {/* Theme Toggle Button (Dark and Light) */}
           <button
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-full bg-[#2a1a11] border border-amber-600/40 text-amber-400 hover:text-amber-200 hover:bg-[#382317] flex items-center justify-center transition-all cursor-pointer shadow"
+            className="w-10 h-10 rounded-full bg-stone-100 dark:bg-[#2a1a11] border border-stone-300 dark:border-amber-600/40 text-stone-800 dark:text-amber-400 hover:bg-stone-200 dark:hover:bg-[#382317] flex items-center justify-center transition-all cursor-pointer shadow-sm"
             title={themeMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
             aria-label="Toggle Theme"
           >

@@ -22,6 +22,8 @@ interface LanguageContextType {
   setIsHelpModalOpen: (open: boolean) => void;
   showOnboarding: boolean;
   setShowOnboarding: (show: boolean) => void;
+  pageAudioContent: string;
+  setPageAudioContent: (text: string) => void;
 }
 
 const defaultContact: TrustedContact = {
@@ -58,6 +60,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
+  const [pageAudioContent, setPageAudioContent] = useState<string>('');
 
   // Sync font size to root html element for real rem scaling across Tailwind
   useEffect(() => {
@@ -78,15 +81,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Sync theme to root html and body elements
   useEffect(() => {
     const isLight = themeMode === 'light';
-    document.documentElement.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast');
-    document.body.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast');
+    document.documentElement.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast', 'dark');
+    document.body.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast', 'dark');
 
     if (isLight) {
       document.documentElement.classList.add('theme-light');
       document.body.classList.add('theme-light');
     } else {
-      document.documentElement.classList.add('theme-dark');
-      document.body.classList.add('theme-dark');
+      document.documentElement.classList.add('theme-dark', 'dark');
+      document.body.classList.add('theme-dark', 'dark');
     }
     localStorage.setItem('aasara_theme', themeMode);
   }, [themeMode]);
@@ -177,6 +180,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setIsHelpModalOpen,
         showOnboarding,
         setShowOnboarding,
+        pageAudioContent,
+        setPageAudioContent,
       }}
     >
       {children}

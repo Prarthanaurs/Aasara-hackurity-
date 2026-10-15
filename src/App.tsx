@@ -25,6 +25,7 @@ const MainApp: React.FC = () => {
     stopSpeaking,
     speak,
     showOnboarding,
+    pageAudioContent,
   } = useLanguage();
 
   const [activeTab, setActiveTab] = useState<
@@ -37,6 +38,11 @@ const MainApp: React.FC = () => {
   }
 
   const handleReadAloudBottom = () => {
+    if (activeTab === 'payment' && pageAudioContent) {
+      speak(pageAudioContent, 'bottom-read-payment');
+      return;
+    }
+
     if (activeTab === 'home') {
       speak(
         `${t.home.welcomeTitle[language]}. ${t.home.welcomeSubtitle[language]}. ${t.home.welcomeHint[language]}`,
@@ -48,7 +54,7 @@ const MainApp: React.FC = () => {
         'bottom-read-checker'
       );
     } else if (activeTab === 'payment') {
-      speak(t.upi.title[language], 'bottom-read-payment');
+      speak(pageAudioContent || t.upi.title[language], 'bottom-read-payment');
     } else if (activeTab === 'emergency') {
       speak(
         `${t.emergency.call1930[language]}. ${t.emergency.goldenHourDesc[language]}`,
@@ -120,8 +126,8 @@ const MainApp: React.FC = () => {
         <Bot className="w-8 h-8 sm:w-9 sm:h-9" />
       </button>
 
-      {/* Fixed Bottom Accessibility Control Bar matching Image 2 */}
-      <footer className="fixed bottom-0 left-0 right-0 z-40 bg-[#160d07]/95 backdrop-blur border-t-2 border-amber-900/60 py-3 px-4 shadow-2xl">
+      {/* Fixed Bottom Accessibility Control Bar */}
+      <footer className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#160d07]/95 backdrop-blur border-t-2 border-stone-200 dark:border-amber-900/60 py-3 px-4 shadow-2xl transition-colors duration-300">
         <div className="max-w-4xl mx-auto flex items-center justify-between sm:justify-start gap-3 sm:gap-4">
           {/* Read Aloud Button (Orange) */}
           <button
@@ -137,13 +143,13 @@ const MainApp: React.FC = () => {
             <span>{t.readAloud[language]}</span>
           </button>
 
-          {/* Stop Button (Dark with border) */}
+          {/* Stop Button */}
           <button
             type="button"
             onClick={stopSpeaking}
-            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-[#28170e] hover:bg-[#382014] text-stone-300 hover:text-white border border-stone-700 font-bold text-base cursor-pointer active:scale-95"
+            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-stone-100 dark:bg-[#28170e] hover:bg-stone-200 dark:hover:bg-[#382014] text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white border border-stone-300 dark:border-stone-700 font-bold text-base cursor-pointer active:scale-95 shadow-sm transition-colors"
           >
-            <Square className="w-4 h-4 fill-stone-400 text-stone-400" />
+            <Square className="w-4 h-4 fill-stone-600 dark:fill-stone-400 text-stone-600 dark:text-stone-400" />
             <span>{t.stopReading[language]}</span>
           </button>
 
@@ -165,9 +171,9 @@ const MainApp: React.FC = () => {
                 'listen-prompt'
               );
             }}
-            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-[#28170e] hover:bg-[#382014] text-stone-300 hover:text-white border border-stone-700 font-bold text-base cursor-pointer active:scale-95"
+            className="flex items-center gap-2 py-3 px-4 sm:px-5 rounded-2xl bg-stone-100 dark:bg-[#28170e] hover:bg-stone-200 dark:hover:bg-[#382014] text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white border border-stone-300 dark:border-stone-700 font-bold text-base cursor-pointer active:scale-95 shadow-sm transition-colors"
           >
-            <Mic className="w-5 h-5 text-emerald-400" />
+            <Mic className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             <span>{t.listen[language]}</span>
           </button>
         </div>
