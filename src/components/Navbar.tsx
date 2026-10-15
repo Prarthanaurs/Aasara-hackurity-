@@ -71,21 +71,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
 
       {/* Main Bar with user-uploaded Logo */}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-        {/* Brand with User's Uploaded Logo */}
+        {/* Brand with User's Uploaded Logo (contains both emblem and title) */}
         <div
           onClick={() => onTabChange('home')}
-          className="flex items-center gap-3 cursor-pointer group select-none"
+          className="flex items-center cursor-pointer group select-none"
+          title="Aasara Home"
         >
-          <img
-            src="/aasara-logo.png"
-            alt="Aasara Logo"
-            className="w-12 h-12 object-contain rounded-2xl shadow-md border-2 border-amber-500/50 bg-[#2b1910] p-0.5 group-hover:scale-105 transition-transform"
-          />
-
-          <div>
-            <span className="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight group-hover:text-amber-400 transition-colors">
-              Aasara
-            </span>
+          <div className="bg-white/95 dark:bg-white/95 rounded-2xl px-2.5 py-1 border border-amber-500/40 shadow-md group-hover:scale-105 transition-transform flex items-center">
+            <img
+              src="/aasara-logo.png"
+              alt="Aasara"
+              className="h-9 sm:h-11 w-auto object-contain"
+            />
           </div>
         </div>
 

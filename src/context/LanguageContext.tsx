@@ -59,10 +59,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
 
-  // Sync font size
+  // Sync font size to root html element for real rem scaling across Tailwind
   useEffect(() => {
+    document.documentElement.classList.remove('font-normal', 'font-large', 'font-xlarge');
+    document.documentElement.classList.add(`font-${fontSize}`);
     document.body.classList.remove('font-normal', 'font-large', 'font-xlarge');
     document.body.classList.add(`font-${fontSize}`);
+
+    const sizeMap: Record<FontSize, string> = {
+      normal: '16px',
+      large: '20px',
+      xlarge: '24px',
+    };
+    document.documentElement.style.fontSize = sizeMap[fontSize] || '20px';
     localStorage.setItem('aasara_fontsize', fontSize);
   }, [fontSize]);
 
