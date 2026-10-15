@@ -83,8 +83,13 @@ export const LanguageOnboarding: React.FC = () => {
       </div>
 
       <div className="max-w-4xl mx-auto w-full space-y-8 my-auto text-center">
-        {/* Header matching Image 1 */}
-        <div className="space-y-2">
+        {/* Header with uploaded logo */}
+        <div className="space-y-3 flex flex-col items-center">
+          <img
+            src="/aasara-logo.png"
+            alt="Aasara Logo"
+            className="w-20 h-20 object-contain rounded-3xl shadow-xl border-2 border-amber-500/50 bg-[#2b1910] p-1.5"
+          />
           <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-amber-500">
             Aasara
           </h1>

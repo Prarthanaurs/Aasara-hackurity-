@@ -165,10 +165,7 @@ export const EducationalLessons: React.FC = () => {
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-200">
-              Feature F — Video & Lessons
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               {t.lessons.title[language]}
             </h1>
             <p className="text-base sm:text-lg text-slate-600 mt-1">

@@ -3,7 +3,7 @@
 @layer base {
   :root {
     --font-scale: 1;
-    --app-bg: #190f09;
+    --app-bg: #1c110a;
     --card-bg: #271810;
     --card-border: #442a1d;
     --text-primary: #fef3c7;
@@ -14,36 +14,58 @@
     --accent-gold: #fbbf24;
   }
 
+  body.font-normal {
+    --font-scale: 1;
+  }
+
   body.font-large {
     --font-scale: 1.15;
   }
 
   body.font-xlarge {
-    --font-scale: 1.3;
+    --font-scale: 1.35;
   }
 
   body.theme-light {
     --app-bg: #fdfaf6;
     --card-bg: #ffffff;
     --card-border: #e2d7cb;
-    --text-primary: #26160d;
+    --text-primary: #1c110a;
     --text-secondary: #594336;
-    --text-muted: #806859;
-    --accent-orange: #ea580c;
-    --accent-amber: #d97706;
-    --accent-gold: #b45309;
+    --text-muted: #786355;
+    background-color: #fdfaf6 !important;
+    color: #1c110a !important;
   }
 
-  body.theme-high-contrast {
-    --app-bg: #000000;
-    --card-bg: #121212;
-    --card-border: #fbbf24;
-    --text-primary: #ffffff;
-    --text-secondary: #fef08a;
-    --text-muted: #fef08a;
-    --accent-orange: #fbbf24;
-    --accent-amber: #f59e0b;
-    --accent-gold: #38bdf8;
+  /* Light Theme Overrides */
+  body.theme-light .app-container {
+    background-color: #fdfaf6 !important;
+    color: #1c110a !important;
+  }
+
+  body.theme-light .app-navbar,
+  body.theme-light .app-footer {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    border-color: #e5d8cb !important;
+    color: #1c110a !important;
+  }
+
+  body.theme-light .app-card-bg {
+    background-color: #ffffff !important;
+    border-color: #e5d8cb !important;
+    color: #1c110a !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  body.theme-light .app-subtext {
+    color: #4a382d !important;
+  }
+
+  body.theme-light .app-nav-link {
+    color: #4a382d !important;
+  }
+  body.theme-light .app-nav-link:hover {
+    color: #ea580c !important;
   }
 
   html {

@@ -82,15 +82,6 @@ const MainApp: React.FC = () => {
                   : '← Back to Home'}
               </span>
             </button>
-
-            {/* Quick feature indicator pill */}
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
-              {activeTab === 'checker' && 'Feature B: Safety Scanner'}
-              {activeTab === 'payment' && 'Feature C: Safe UPI Pay'}
-              {activeTab === 'emergency' && 'Feature D: 1930 Cyber Support'}
-              {activeTab === 'tutor' && 'Feature E: AI Safety Tutor'}
-              {activeTab === 'lessons' && 'Feature F: Educational Lessons'}
-            </span>
           </div>
         )}
 

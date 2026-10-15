@@ -8,7 +8,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import type { Language } from '../types';
+import type { Language, FontSize } from '../types';
 
 interface NavbarProps {
   currentTab: string;
@@ -19,6 +19,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
   const {
     language,
     setLanguage,
+    fontSize,
+    setFontSize,
     themeMode,
     toggleTheme,
     t,
@@ -46,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
   return (
     <header className="sticky top-0 z-50 bg-[#1f140e]/95 backdrop-blur border-b border-amber-900/40 shadow-md">
       {/* Top 1930 Emergency Strip */}
-      <div className="bg-[#991b1b] text-white px-4 py-1 flex items-center justify-between text-xs sm:text-sm font-bold">
+      <div className="bg-[#991b1b] text-white px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm font-bold">
         <a
           href="tel:1930"
           className="flex items-center gap-2 hover:underline"
@@ -59,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsHelpModalOpen(true)}
-            className="flex items-center gap-1.5 bg-black/20 hover:bg-black/30 px-3 py-0.5 rounded-full text-xs font-semibold cursor-pointer"
+            className="flex items-center gap-1.5 bg-black/20 hover:bg-black/30 px-3 py-1 rounded-full text-xs font-semibold cursor-pointer"
           >
             <UserCheck className="w-3.5 h-3.5 text-emerald-300" />
             <span>{t.needHelp[language]}</span>
@@ -67,42 +69,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
         </div>
       </div>
 
-      {/* Main Bar matching Image 2 */}
+      {/* Main Bar with user-uploaded Logo */}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-        {/* Brand with Grandmother Avatar */}
+        {/* Brand with User's Uploaded Logo */}
         <div
           onClick={() => onTabChange('home')}
           className="flex items-center gap-3 cursor-pointer group select-none"
         >
-          {/* Grandmother Avatar */}
-          <div className="w-11 h-11 rounded-full bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center overflow-hidden shrink-0 shadow">
-            <svg
-              viewBox="0 0 100 100"
-              className="w-10 h-10 transform scale-110"
-              aria-label="Aasara Grandmother Mascot"
-            >
-              {/* Saree/Shawl background */}
-              <circle cx="50" cy="50" r="48" fill="#f59e0b" />
-              {/* Saree Drape */}
-              <path d="M15 88 Q50 68 85 88" fill="#ea580c" />
-              {/* Face */}
-              <circle cx="50" cy="46" r="28" fill="#fed7aa" />
-              {/* Silver hair bun */}
-              <ellipse cx="50" cy="24" rx="26" ry="16" fill="#e2e8f0" />
-              <circle cx="50" cy="12" r="10" fill="#cbd5e1" />
-              {/* Spectacles */}
-              <circle cx="42" cy="45" r="7" fill="none" stroke="#78350f" strokeWidth="2.5" />
-              <circle cx="58" cy="45" r="7" fill="none" stroke="#78350f" strokeWidth="2.5" />
-              <line x1="49" y1="45" x2="51" y2="45" stroke="#78350f" strokeWidth="2.5" />
-              {/* Eyes */}
-              <circle cx="42" cy="45" r="2.5" fill="#451a03" />
-              <circle cx="58" cy="45" r="2.5" fill="#451a03" />
-              {/* Red Bindi */}
-              <circle cx="50" cy="36" r="2.5" fill="#dc2626" />
-              {/* Kind Smile */}
-              <path d="M43 56 Q50 63 57 56" fill="none" stroke="#9a3412" strokeWidth="2.5" strokeLinecap="round" />
-            </svg>
-          </div>
+          <img
+            src="/aasara-logo.png"
+            alt="Aasara Logo"
+            className="w-12 h-12 object-contain rounded-2xl shadow-md border-2 border-amber-500/50 bg-[#2b1910] p-0.5 group-hover:scale-105 transition-transform"
+          />
 
           <div>
             <span className="text-2xl sm:text-3xl font-black text-amber-500 tracking-tight group-hover:text-amber-400 transition-colors">
@@ -180,8 +158,32 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
           </button>
         </nav>
 
-        {/* Right side controls: Language Dropdown + Theme Toggle */}
+        {/* Right side controls: Font Size Switcher (A, A+, A++) + Language + Theme Toggle */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Font Size Accessibility Controls: A, A+, A++ */}
+          <div
+            className="flex items-center gap-0.5 bg-[#2a1a11] border border-amber-600/40 rounded-xl p-1"
+            title="Text Size (A, A+, A++)"
+            aria-label="Text Size Selector"
+          >
+            {(['normal', 'large', 'xlarge'] as FontSize[]).map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setFontSize(size)}
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg font-black text-xs sm:text-sm flex items-center justify-center cursor-pointer transition-all ${
+                  fontSize === size
+                    ? 'bg-orange-600 text-white shadow ring-2 ring-orange-400/50'
+                    : 'text-amber-200/80 hover:text-white hover:bg-white/10'
+                }`}
+                title={`Font Size ${size === 'normal' ? 'Normal' : size === 'large' ? 'Large' : 'Extra Large'}`}
+                aria-label={`Set font size to ${size}`}
+              >
+                {size === 'normal' ? 'A' : size === 'large' ? 'A+' : 'A++'}
+              </button>
+            ))}
+          </div>
+
           {/* Language Switcher Dropdown */}
           <div className="relative">
             <button
@@ -230,14 +232,15 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             )}
           </div>
 
-          {/* Theme Toggle Sun Icon Button matching Image 2 */}
+          {/* Theme Toggle Button (Dark and Light) */}
           <button
             onClick={toggleTheme}
             className="w-10 h-10 rounded-full bg-[#2a1a11] border border-amber-600/40 text-amber-400 hover:text-amber-200 hover:bg-[#382317] flex items-center justify-center transition-all cursor-pointer shadow"
-            title="Toggle Theme"
+            title={themeMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            aria-label="Toggle Theme"
           >
             {themeMode === 'light' ? (
-              <Moon className="w-5 h-5" />
+              <Moon className="w-5 h-5 text-indigo-900" />
             ) : (
               <Sun className="w-5 h-5 text-amber-400" />
             )}

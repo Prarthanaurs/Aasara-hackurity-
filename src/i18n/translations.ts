@@ -180,16 +180,16 @@ export const translations = {
       },
       findTutor: {
         title: {
-          en: 'Find a Tutor',
-          kn: 'ಎಐ ಮಾರ್ಗದರ್ಶಿ ಮತ್ತು ಪಾಠಗಳು',
-          hi: 'एआई शिक्षक और साथी',
-          te: 'ఏఐ గైడ్ మరియు ట్యూటర్',
+          en: 'Aasara Saathi',
+          kn: 'ಆಸರಾ ಸ್ನೇಹಿತ',
+          hi: 'आसरा साथी',
+          te: 'ఆసరా సాథి',
         },
         desc: {
-          en: 'Connect with a helper near you & practice safe scenarios',
-          kn: 'ನಕಲಿ ಕರೆಗಳನ್ನು ಎದುರಿಸುವ ಸುರಕ್ಷಿತ ಅಭ್ಯಾಸ',
-          hi: 'फर्जी कॉल से बचने का सुरक्षित अभ्यास करें',
-          te: 'సురక్షితంగా మోసాలను ఎదుర్కొనే అభ్యాసం',
+          en: 'Your caring AI safety tutor & safe practice companion',
+          kn: 'ನಿಮ್ಮ ಡಿಜಿಟಲ್ ಸುರಕ್ಷತೆಯ ಆಪ್ತ ಎಐ ಗುರು ಮತ್ತು ಅಭ್ಯಾಸ ಸಂಗಾತಿ',
+          hi: 'आपका कृत्रिम बुद्धिमत्ता सुरक्षा शिक्षक और अभ्यास साथी',
+          te: 'మీ ఏఐ రక్షణ గైడ్ మరియు సురక్షిత అభ్యాస భాగస్వామి',
         },
       },
     },
@@ -201,7 +201,7 @@ export const translations = {
     checkMessage: { en: 'Check Message', kn: 'ಸಂದೇಶ ಪರಿಶೀಲನೆ', hi: 'संदेश जांच', te: 'సందేశ తనిఖీ' },
     paySafely: { en: 'Guided Payment', kn: 'ಸುರಕ್ಷಿತ ಪಾವತಿ', hi: 'सुरक्षित भुगतान', te: 'సురక్షిత చెల్లింపు' },
     urgentHelp: { en: 'Urgent Help', kn: 'ತುರ್ತು 1930', hi: 'आपातकाल 1930', te: 'అత్యవసరం 1930' },
-    tutor: { en: 'Volunteer / Tutor', kn: 'ಎಐ ಗುರು', hi: 'एआई शिक्षक', te: 'ఏఐ ట్యూటర్' },
+    tutor: { en: 'Aasara Saathi', kn: 'ಆಸರಾ ಸ್ನೇಹಿತ', hi: 'आसरा साथी', te: 'ఆసరా సాథి' },
     lessons: { en: 'Safety Lessons', kn: 'ಪಾಠಗಳು', hi: 'पाठ', te: 'పాఠాలు' },
   },
 

@@ -158,10 +158,7 @@ export const AiTutor: React.FC = () => {
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200">
-              Feature E — Safe Practice & AI Guide
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2 flex items-center gap-2">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 flex items-center gap-2">
               <Bot className="w-8 h-8 text-purple-600" />
               <span>{t.tutor.title[language]}</span>
             </h1>

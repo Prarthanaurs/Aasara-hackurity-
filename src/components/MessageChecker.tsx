@@ -134,10 +134,7 @@ export const MessageChecker: React.FC = () => {
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-              Feature B — Safety Scanner
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
               {t.checker.title[language]}
             </h1>
             <p className="text-base sm:text-lg text-slate-600 mt-1">
