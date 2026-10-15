@@ -4,7 +4,22 @@
 
 ---
 
-## 🌟 Key Features
+## 🎥 Project Demo Video
+
+[![Aasara Project Demo Video](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+
+> 📺 **Watch the Full Video Walkthrough**: [Click Here to Watch on YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)  
+> *(Alternative: [Watch on Google Drive / Loom](https://drive.google.com/file/d/YOUR_DRIVE_LINK/view))*
+
+### ⏱️ Video Chapters & Walkthrough Timestamps:
+- **`0:00` - Introduction & The Elder Fraud Crisis**: Why seniors are vulnerable to modern UPI scams.
+- **`0:35` - Elder-First Accessibility**: High-contrast themes, `A A+ A++` font scaling, and 4-language onboarding (Kannada, Telugu, Hindi, English).
+- **`1:15` - The "Ghost Merchant Shield" Live Demo**: Scanning a deceptive QR code and detecting identity mismatch before payment.
+- **`2:00` - Multilingual Voice Assistant**: Full read-aloud guidance in Indic languages reciting the cardinal UPI PIN rule.
+- **`2:40` - Suspicious Message & Link Scanner**: Detecting urgent bank threats, lottery scams, and phishing domains with human reasoning.
+- **`3:15` - Emergency 1930 & Aasara Saathi**: One-tap National Cybercrime Helpline and AI voice tutor for seniors.
+
+---
 
 ### 🔊 Feature A — Accessible, Voice-Guided Interface
 - **Multilingual Support**: English, Kannada (**ಕನ್ನಡ**), Hindi (**हिन्दी**), and Telugu (**తెలుగు**) with authentic phrasing.
