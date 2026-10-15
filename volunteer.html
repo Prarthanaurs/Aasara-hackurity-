@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  volunteer.html — Volunteer & Essential Services
+  ------------------------------------------------
+  Two tabs:
+    Tab 1 — Volunteer:
+      A) Register as a volunteer (demo only)
+      B) Request assistance (demo form + city-matched fictional volunteers)
+
+    Tab 2 — Essential Services:
+      Balance check guide (text only, no real bank access)
+      Links to official resources
+
+  No real data is collected, stored, or transmitted.
+  No real volunteers are contacted.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Volunteer &amp; Services</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <nav class="navbar" role="navigation" aria-label="Main navigation" id="page-navbar">
+    <a href="home.html" class="brand" aria-label="Aasara home">Aasara · ಆಸರೆ</a>
+    <span class="spacer"></span>
+    <a href="home.html" class="nav-link" data-i18n="nav_home">Home</a>
+  </nav>
+
+  <main id="main-content" class="container" style="padding-top: var(--space-lg);">
+
+    <h1 class="page-title" data-i18n="volunteer_title">Volunteer &amp; Essential Services</h1>
+
+    <!-- Demo disclaimer -->
+    <div class="alert alert-info" style="margin-bottom: var(--space-lg);">
+      <strong>ⓘ </strong>
+      <span data-i18n="demo_notice">
+        This form is for demonstration only. No data is stored or sent anywhere.
+      </span>
+    </div>
+
+    <!-- ===================================================================
+         Tab buttons
+         =================================================================== -->
+    <div class="tabs" role="tablist" aria-label="Page sections">
+
+      <button
+        class="tab-btn active"
+        data-tab="tab-volunteer"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-volunteer"
+        data-i18n="tab_volunteer"
+      >
+        Volunteer
+      </button>
+
+      <button
+        class="tab-btn"
+        data-tab="tab-services"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-services"
+        id="services"
+        data-i18n="tab_services"
+      >
+        Essential Services
+      </button>
+
+    </div><!-- /.tabs -->
+
+    <!-- ===================================================================
+         TAB 1 — Volunteer
+         =================================================================== -->
+    <div
+      id="tab-volunteer"
+      class="tab-panel active"
+      role="tabpanel"
+      aria-labelledby="tab-volunteer-btn"
+    >
+
+      <!-- Sub-section A: Register as a volunteer -->
+      <section class="card" style="margin-bottom: var(--space-lg);">
+        <h2 data-i18n="sub_register">Register as a Volunteer</h2>
+        <p style="margin-top: var(--space-xs); margin-bottom: var(--space-md); color: var(--color-muted);">
+          Would you like to help older adults in your city use digital payments?
+          Fill in the form below. <strong>This is a demonstration only.</strong>
+        </p>
+
+        <form id="register-form" novalidate>
+
+          <div class="form-group">
+            <label for="reg-name" data-i18n="label_name">Your Name</label>
+            <input
+              type="text"
+              id="reg-name"
+              autocomplete="name"
+              maxlength="80"
+              required
+              placeholder="e.g. Ravi Kumar"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="reg-city" data-i18n="label_city">City</label>
+            <!-- Options populated by volunteer.js -->
+            <select id="reg-city" class="city-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="reg-phone" data-i18n="label_phone">Phone (demo only)</label>
+            <input
+              type="tel"
+              id="reg-phone"
+              maxlength="15"
+              placeholder="e.g. 98765-43210"
+            />
+          </div>
+
+          <div id="reg-error" class="field-error" role="alert" style="display:none;"></div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn btn-success" data-i18n="btn_submit">Submit</button>
+          </div>
+
+        </form>
+
+        <!-- Confirmation shown after submission -->
+        <div id="reg-confirm" class="alert alert-success" style="display:none;">
+          <p data-i18n="confirm_register">Thank you! Your volunteer registration has been noted (demonstration only).</p>
+          <p style="margin-top: var(--space-xs);">
+            Name: <strong class="confirm-name"></strong> · City: <strong class="confirm-city"></strong>
+          </p>
+        </div>
+
+      </section><!-- /register section -->
+
+      <!-- Sub-section B: Request assistance -->
+      <section class="card">
+        <h2 data-i18n="sub_request">Request Assistance</h2>
+        <p style="margin-top: var(--space-xs); margin-bottom: var(--space-md); color: var(--color-muted);">
+          Need help with digital payments? Fill in the form to see
+          demonstration volunteers near you.
+        </p>
+
+        <form id="request-form" novalidate>
+
+          <div class="form-group">
+            <label for="req-name" data-i18n="label_name">Your Name</label>
+            <input
+              type="text"
+              id="req-name"
+              autocomplete="name"
+              maxlength="80"
+              required
+              placeholder="e.g. Sunita Devi"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="req-city" data-i18n="label_city">City</label>
+            <select id="req-city" class="city-select" required></select>
+          </div>
+
+          <div class="form-group">
+            <label for="req-desc" data-i18n="label_desc">Describe the help you need</label>
+            <textarea
+              id="req-desc"
+              rows="3"
+              maxlength="300"
+              placeholder="e.g. I need help setting up UPI on my phone."
+            ></textarea>
+          </div>
+
+          <div id="req-error" class="field-error" role="alert" style="display:none;"></div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn btn-success" data-i18n="btn_submit">Submit</button>
+          </div>
+
+        </form>
+
+        <!-- Volunteer match results (hidden until form submitted) -->
+        <div id="volunteer-results" style="display:none; margin-top: var(--space-lg);">
+          <p class="results-msg" style="font-weight:600; margin-bottom: var(--space-md);"></p>
+          <div id="volunteer-list" role="list" aria-label="Matched volunteers">
+            <!-- Volunteer cards inserted by volunteer.js -->
+          </div>
+        </div>
+
+      </section><!-- /request section -->
+
+    </div><!-- /#tab-volunteer -->
+
+    <!-- ===================================================================
+         TAB 2 — Essential Services
+         =================================================================== -->
+    <div
+      id="tab-services"
+      class="tab-panel"
+      role="tabpanel"
+      aria-labelledby="services"
+      aria-hidden="true"
+    >
+
+      <section class="card" style="margin-bottom: var(--space-lg);">
+
+        <h2 data-i18n="services_title">Essential Services</h2>
+
+        <!-- Balance check guide -->
+        <div style="margin-top: var(--space-lg);">
+          <h3 data-i18n="balance_guide_title">How to Check Your Bank Balance</h3>
+
+          <!-- Step-by-step instructions (plain text, no real data) -->
+          <ol style="margin: var(--space-md) 0; padding-left: var(--space-lg); line-height: 2;">
+            <li>Open your official banking app (e.g. SBI YONO, HDFC Mobile Banking, Canara ai1).</li>
+            <li>Log in using your registered mobile number and MPIN.</li>
+            <li>Tap <strong>"Account Summary"</strong> or <strong>"Balance Enquiry"</strong>.</li>
+            <li>Your current balance will be shown on screen.</li>
+            <li>
+              <strong>Without internet:</strong> Dial <strong>*99#</strong> on any mobile phone.
+              Follow the menu to check your balance using USSD.
+            </li>
+          </ol>
+
+          <div class="alert alert-info">
+            <strong>ⓘ </strong>
+            <span data-i18n="balance_disclaimer">
+              Aasara does not connect to any bank account. The guide above uses official bank apps only.
+            </span>
+          </div>
+
+          <!-- Read aloud this section -->
+          <button
+            class="btn btn-ghost"
+            onclick="speakRaw(t('balance_guide_title') + '. ' + t('balance_guide_body'))"
+            aria-label="Read balance guide aloud"
+          >
+            🔊 <span data-i18n="read_aloud">Read Aloud</span>
+          </button>
+        </div>
+
+        <hr style="margin: var(--space-xl) 0; border-color: var(--color-border);" />
+
+        <!-- Official resource links -->
+        <div>
+          <h3>Official Resources</h3>
+          <ul style="margin: var(--space-md) 0; padding-left: var(--space-lg); line-height: 2.2;">
+            <li>
+              <a href="https://www.npci.org.in/what-we-do/upi/product-overview" target="_blank" rel="noopener noreferrer">
+                NPCI — What is UPI?
+              </a>
+            </li>
+            <li>
+              <a href="https://www.bhimupi.org.in" target="_blank" rel="noopener noreferrer">
+                BHIM UPI — Official App
+              </a>
+            </li>
+            <li>
+              <a href="https://cybercrime.gov.in" target="_blank" rel="noopener noreferrer">
+                National Cyber Crime Reporting Portal — cybercrime.gov.in
+              </a>
+            </li>
+            <li>
+              Cyber Crime Helpline: <strong>1930</strong> (toll-free, India)
+            </li>
+            <li>
+              RBI Complaint Portal:
+              <a href="https://cms.rbi.org.in" target="_blank" rel="noopener noreferrer">
+                cms.rbi.org.in
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+
+    </div><!-- /#tab-services -->
+
+    <!-- ===================================================================
+         Volunteer Leaderboard
+         Recognises volunteers who have helped the most people.
+         =================================================================== -->
+    <section id="leaderboard" class="card" style="margin-top: var(--space-xl);">
+      <h2>🏆 Volunteer Leaderboard</h2>
+      <p style="color: var(--color-muted); margin: var(--space-xs) 0 var(--space-lg);">
+        Top volunteers who helped the most people this month (demonstration only).
+      </p>
+      <ol class="leaderboard-list" role="list">
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥇</span>
+          <span class="lb-name">Priya Nair</span>
+          <span class="lb-city">Bengaluru</span>
+          <span class="lb-count">42 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥈</span>
+          <span class="lb-name">Ravi Shankar</span>
+          <span class="lb-city">Hyderabad</span>
+          <span class="lb-count">38 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">🥉</span>
+          <span class="lb-name">Anita Reddy</span>
+          <span class="lb-city">Chennai</span>
+          <span class="lb-count">31 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">4.</span>
+          <span class="lb-name">Mohan Das</span>
+          <span class="lb-city">Mumbai</span>
+          <span class="lb-count">27 people helped</span>
+        </li>
+        <li class="leaderboard-item">
+          <span class="lb-rank">5.</span>
+          <span class="lb-name">Sunita Patil</span>
+          <span class="lb-city">Pune</span>
+          <span class="lb-count">22 people helped</span>
+        </li>
+      </ol>
+      <p class="muted" style="margin-top: var(--space-md); font-size: var(--font-size-sm);">
+        ⓘ Demonstration data only. No real identities are used.
+      </p>
+    </section>
+
+  </main>
+
+  <script src="js/languages.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/volunteer.js"></script>
+  <script>
+    applyLanguage();
+    injectThemeToggle(document.getElementById('page-navbar'));
+    injectVoiceBar();
+    initVolunteer();
+
+    // Voice commands
+    startListening({
+      'home':     () => window.location.href = 'home.html',
+      'go back':  () => window.location.href = 'home.html',
+      'services': () => switchTab('tab-services'),
+      'volunteer':() => switchTab('tab-volunteer'),
+    });
+  </script>
+
+</body>
+</html>

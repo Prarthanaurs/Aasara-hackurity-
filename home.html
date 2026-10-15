@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  home.html — Aasara Dashboard
+  ----------------------------
+  The main navigation hub shown after language selection.
+
+  What this page does:
+  1. Shows a greeting and the selected language badge.
+  2. Displays four large coloured feature cards (2×2 grid).
+  3. Shows an "Ask Aasara for Help" CTA that opens the AI assistant.
+  4. Injects the shared voice bar (from voice.js).
+  5. Speaks a welcome message the first time the user arrives.
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aasara — Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Early redirect guard: runs before any other script or render -->
+  <script>
+    if (!sessionStorage.getItem('aasara_lang')) {
+      window.location.replace('index.html');
+    }
+  </script>
+</head>
+<body class="home-page">
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- =====================================================================
+       Top navigation bar — logo + nav links + dark-mode toggle
+       ===================================================================== -->
+  <nav class="home-navbar" role="navigation" aria-label="Main navigation">
+    <!-- Logo block -->
+    <a href="home.html" class="home-brand" aria-label="Aasara home">
+      <span class="home-brand-icon" aria-hidden="true">🌸</span>
+      <span class="home-brand-name">Aasara</span>
+    </a>
+
+    <span class="spacer"></span>
+
+    <!-- Nav links — each item maps to a real page in this project -->
+    <ul class="home-nav-links" role="list">
+      <li><a href="home.html"               class="home-nav-link active">Home</a></li>
+      <li><a href="awareness.html"          class="home-nav-link">Why This Matters</a></li>
+      <li><a href="safety.html"             class="home-nav-link">How It Works</a></li>
+      <li><a href="payment.html"            class="home-nav-link">Guided Payment</a></li>
+      <li><a href="volunteer.html"          class="home-nav-link">Volunteer</a></li>
+      <li><a href="volunteer.html#leaderboard" class="home-nav-link">Leaderboard</a></li>
+    </ul>
+
+    <!-- Language badge + theme toggle (injected by theme.js) -->
+    <div class="home-nav-right" id="home-nav-right">
+      <span class="lang-badge" id="lang-badge" aria-label="Selected language"></span>
+    </div>
+  </nav>
+
+  <!-- =====================================================================
+       Main content
+       ===================================================================== -->
+  <main id="main-content" class="home-main">
+
+    <!-- Page header -->
+    <header class="home-hero">
+      <h1 data-i18n="home_greeting">Welcome to Aasara</h1>
+      <p class="home-hero-sub">Use your phone with confidence. We are here to help you stay safe, step by step.</p>
+      <p class="home-hero-hint">Choose an option below. Tap the speaker button to hear it read aloud.</p>
+    </header>
+
+    <!-- ===================================================================
+         2 × 2 Feature card grid
+         Each card: coloured background, SVG icon, label + desc, speaker btn
+         =================================================================== -->
+    <section aria-label="Features" class="home-card-section">
+      <div class="home-card-grid" role="list">
+
+        <!-- Check a Message (Safety) — blue -->
+        <a
+          href="safety.html"
+          class="home-feature-card hfc-blue"
+          role="listitem"
+          data-card-label="card_safety"
+          data-card-desc="card_safety_desc"
+          aria-label="Check a Message — Check a suspicious message or link"
+        >
+          <span class="hfc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </span>
+          <span class="hfc-body">
+            <span class="hfc-label">Check a Message</span>
+            <span class="hfc-desc" data-i18n="card_safety_desc">Check a suspicious message or link.</span>
+          </span>
+          <button class="hfc-speak-btn" aria-label="Read aloud: Check a Message"
+            onclick="event.preventDefault(); speakRaw(t('card_safety') + '. ' + t('card_safety_desc'))">
+            🔊
+          </button>
+        </a>
+
+        <!-- Pay Safely (Payment) — green -->
+        <a
+          href="payment.html"
+          class="home-feature-card hfc-green"
+          role="listitem"
+          data-card-label="card_payment"
+          data-card-desc="card_payment_desc"
+          aria-label="Pay Safely — Get help before making a payment"
+        >
+          <span class="hfc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="2"/>
+              <line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </span>
+          <span class="hfc-body">
+            <span class="hfc-label">Pay Safely</span>
+            <span class="hfc-desc" data-i18n="card_payment_desc">Get help before making a payment.</span>
+          </span>
+          <button class="hfc-speak-btn" aria-label="Read aloud: Pay Safely"
+            onclick="event.preventDefault(); speakRaw(t('card_payment') + '. ' + t('card_payment_desc'))">
+            🔊
+          </button>
+        </a>
+
+        <!-- Urgent Help (Awareness) — red/rose -->
+        <a
+          href="awareness.html"
+          class="home-feature-card hfc-red"
+          role="listitem"
+          data-card-label="card_awareness"
+          data-card-desc="card_awareness_desc"
+          aria-label="Urgent Help — Find out what to do if something went wrong"
+        >
+          <span class="hfc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+          </span>
+          <span class="hfc-body">
+            <span class="hfc-label">Urgent Help</span>
+            <span class="hfc-desc" data-i18n="card_awareness_desc">Find out what to do if something went wrong.</span>
+          </span>
+          <button class="hfc-speak-btn" aria-label="Read aloud: Urgent Help"
+            onclick="event.preventDefault(); speakRaw(t('card_awareness') + '. ' + t('card_awareness_desc'))">
+            🔊
+          </button>
+        </a>
+
+        <!-- Find a Tutor (Volunteer) — amber/gold -->
+        <a
+          href="volunteer.html"
+          class="home-feature-card hfc-amber"
+          role="listitem"
+          data-card-label="card_volunteer"
+          data-card-desc="card_volunteer_desc"
+          aria-label="Find a Tutor — Get patient, personal digital guidance"
+        >
+          <span class="hfc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </span>
+          <span class="hfc-body">
+            <span class="hfc-label">Find a Tutor</span>
+            <span class="hfc-desc" data-i18n="card_volunteer_desc">Get patient, personal digital guidance.</span>
+          </span>
+          <button class="hfc-speak-btn" aria-label="Read aloud: Find a Tutor"
+            onclick="event.preventDefault(); speakRaw(t('card_volunteer') + '. ' + t('card_volunteer_desc'))">
+            🔊
+          </button>
+        </a>
+
+      </div><!-- /.home-card-grid -->
+    </section>
+
+    <!-- ===================================================================
+         "Ask Aasara for Help" CTA — opens the AI assistant panel
+         =================================================================== -->
+    <section class="home-cta-section" aria-label="AI Assistant">
+      <button
+        class="home-ask-btn"
+        id="home-ask-btn"
+        aria-label="Ask Aasara for Help"
+        onclick="document.getElementById('ai-toggle-btn') && document.getElementById('ai-toggle-btn').click()"
+      >
+        <span class="home-ask-icon" aria-hidden="true">🤖</span>
+        Ask Aasara for Help
+      </button>
+
+      <button
+        class="home-hear-btn"
+        aria-label="Hear about Ask Aasara"
+        onclick="speakRaw('Ask Aasara for Help. Tap this button to chat with our AI assistant. It can answer your questions about payments, safety, and more.')"
+      >
+        🔊 Hear about Ask Aasara
+      </button>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       Scripts — order matters:
+       languages.js must load before voice.js, and both before the inline script.
+       ===================================================================== -->
+  <script src="js/languages.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/assistant.js"></script>
+  <script>
+    /*
+     * home.html inline script
+     * -----------------------
+     * 1. Applies the selected language to all data-i18n elements.
+     * 2. Shows the language badge.
+     * 3. Injects the voice bar.
+     * 4. Injects the AI assistant.
+     * 5. Registers the page reader and speaks a welcome on first visit.
+     * 6. Reads each feature card aloud when the user hovers, focuses, or taps it.
+     */
+
+    // Map language codes to readable labels for the badge
+    const LANG_LABELS = { en: 'English', kn: 'ಕನ್ನಡ', hi: 'हिंदी', te: 'తెలుగు' };
+
+    // 1. Apply language translations
+    applyLanguage();
+
+    // 2. Show language badge
+    const lang = getLanguage();
+    const badge = document.getElementById('lang-badge');
+    if (badge) {
+      badge.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+    }
+
+    // 3. Inject the floating voice bar
+    injectVoiceBar();
+
+    // 4. Inject the AI assistant chat widget
+    injectAssistant();
+
+    // 5. Register what the "Read Aloud" button does on this page
+    registerPageReader(() => {
+      const cardNames = Array.from(document.querySelectorAll('.home-feature-card'))
+        .map(c => t(c.dataset.cardLabel) + '. ' + t(c.dataset.cardDesc))
+        .join('. ');
+      speakRaw(t('home_voice_welcome') + '. ' + cardNames);
+    });
+
+    // 6. Cards already have per-card 🔊 speaker buttons for explicit read-aloud.
+    //    No auto-speak on hover/focus — speech only plays when user taps a button.
+
+    // 7. Voice commands
+    startListening({
+      'payment':       () => window.location.href = 'payment.html',
+      'open payment':  () => window.location.href = 'payment.html',
+      'pay safely':    () => window.location.href = 'payment.html',
+      'safety':        () => window.location.href = 'safety.html',
+      'check message': () => window.location.href = 'safety.html',
+      'lessons':       () => window.location.href = 'awareness.html',
+      'urgent help':   () => window.location.href = 'awareness.html',
+      'volunteer':     () => window.location.href = 'volunteer.html',
+      'tutor':         () => window.location.href = 'volunteer.html',
+      'services':      () => window.location.href = 'volunteer.html#services',
+      'help':          () => speak('home_voice_welcome'),
+      'repeat':        () => speak('home_voice_welcome'),
+    });
+
+    // 8. (Auto-speak removed — speech only plays when the user taps "Read Aloud")
+
+    // 9. Theme toggle — injected into the navbar right section
+    injectThemeToggle(document.getElementById('home-nav-right'));
+  </script>
+
+</body>
+</html>
