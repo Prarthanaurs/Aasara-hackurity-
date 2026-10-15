@@ -548,9 +548,37 @@ export const UpiPaymentGuide: React.FC = () => {
                       ? 'ಸೈಬರ್ ಹೆಲ್ಪ್‌ಲೈನ್ 1930 ಗೆ ಕರೆ ಮಾಡಿ'
                       : language === 'hi'
                       ? 'साइबर हेल्पलाइन 1930 पर कॉल करें'
+                      : language === 'te'
+                      ? 'సైబర్ హెల్ప్‌లైన్ 1930 కు కాల్ చేయండి'
                       : 'Report Fraud: Call 1930'}
                   </span>
                 </a>
+
+                {/* USER REQUESTED: Option to continue after scanning/uploading */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRecipient(shieldReport.parsedVpa);
+                    setRecipientName(shieldReport.claimedMerchant);
+                    if (shieldReport.parsedAmount) setAmount(shieldReport.parsedAmount);
+                    if (shieldReport.parsedPurpose) setPurpose(shieldReport.parsedPurpose);
+                    setActiveTab('guided');
+                    setCurrentStep(shieldReport.parsedAmount ? 4 : 2);
+                  }}
+                  className="w-full sm:w-auto py-4 px-6 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-lg flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all"
+                  title="Continue payment with scanned details"
+                >
+                  <span>
+                    {language === 'kn'
+                      ? '⚠️ ಆದರೂ ಮುಂದುವರಿಯಿರಿ'
+                      : language === 'hi'
+                      ? '⚠️ फिर भी आगे बढ़ें'
+                      : language === 'te'
+                      ? '⚠️ అయినప్పటికీ కొనసాగండి'
+                      : '⚠️ Continue to Pay Anyway'}
+                  </span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
 
                 <button
                   type="button"
@@ -564,6 +592,8 @@ export const UpiPaymentGuide: React.FC = () => {
                     ? 'ಬೇರೆ ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ'
                     : language === 'hi'
                     ? 'दूसरा कोड स्कैन करें'
+                    : language === 'te'
+                    ? 'మరో కోడ్ స్కాన్ చేయండి'
                     : 'Scan Another QR'}
                 </button>
               </div>
@@ -593,24 +623,22 @@ export const UpiPaymentGuide: React.FC = () => {
                   type="button"
                   onClick={() => {
                     setActiveTab('guided');
-                    setCurrentStep(2); // Proceed directly to amount step with prefilled data!
+                    setCurrentStep(amount ? 4 : 2); // Proceed to review or amount step
                   }}
-                  className="w-full sm:w-auto py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-lg flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  className="w-full sm:flex-1 py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xl flex items-center justify-center gap-2 cursor-pointer shadow-lg active:scale-95 transition-all"
                 >
                   <span>
-                    {language === 'kn'
-                      ? 'ಹಂತ-ಹಂತದ ಪಾವತಿಗೆ ಮುಂದುವರಿಯಿರಿ'
-                      : language === 'hi'
-                      ? 'भुगतान जारी रखें'
-                      : 'Proceed with Guided Payment'}
+                    {amount
+                      ? `${language === 'kn' ? `₹${amount} ಪಾವತಿಸಲು ಮುಂದುವರಿಯಿರಿ` : language === 'hi' ? `₹${amount} भुगतान करने के लिए आगे बढ़ें` : language === 'te' ? `₹${amount} చెల్లించడానికి కొనసాగండి` : `Continue to Pay ₹${amount}`} ➡️`
+                      : `${language === 'kn' ? 'ಮುಂದಿನ ಹಂತಕ್ಕೆ ಮುಂದುವರಿಯಿರಿ (ಮೊತ್ತ ನಮೂದಿಸಿ)' : language === 'hi' ? 'अगले चरण पर जाएं (राशि डालें)' : language === 'te' ? 'తదుపరి దశకు వెళ్లండి' : 'Continue to Next Step (Amount)'} ➡️`}
                   </span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-6 h-6" />
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setShieldReport(null)}
-                  className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-slate-200 dark:bg-stone-800 text-slate-700 dark:text-stone-300 font-bold"
+                  className="w-full sm:w-auto py-4 px-5 rounded-2xl bg-slate-200 dark:bg-stone-800 text-slate-700 dark:text-stone-300 font-bold"
                 >
                   Clear
                 </button>
@@ -808,27 +836,50 @@ export const UpiPaymentGuide: React.FC = () => {
 
               {/* Verified Merchant Badge if populated */}
               {recipientName && recipient && (
-                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/60 rounded-2xl border-2 border-emerald-400 dark:border-emerald-700 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                    <div>
-                      <p className="text-lg font-black text-emerald-950 dark:text-emerald-100">
-                        {recipientName}
-                      </p>
-                      <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                        {recipient}
-                      </p>
+                <div className="p-5 bg-emerald-50 dark:bg-emerald-950/60 rounded-2xl border-2 border-emerald-400 dark:border-emerald-700 space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                      <div>
+                        <p className="text-xl font-black text-emerald-950 dark:text-emerald-100">
+                          {recipientName}
+                        </p>
+                        <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                          {recipient}
+                        </p>
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRecipient('');
+                        setRecipientName('');
+                      }}
+                      className="text-xs font-bold text-red-600 hover:underline cursor-pointer"
+                    >
+                      Change
+                    </button>
                   </div>
+
+                  {/* Immediate continue option after QR scan/upload */}
                   <button
                     type="button"
                     onClick={() => {
-                      setRecipient('');
-                      setRecipientName('');
+                      setCurrentStep(amount ? 4 : 2);
+                      if (amount) {
+                        speak(`${t.upi.reviewTitle[language]}`, 'review-step');
+                      } else {
+                        speak(t.upi.step2Title[language], 'step-2-guide');
+                      }
                     }}
-                    className="text-xs font-bold text-red-600 hover:underline cursor-pointer"
+                    className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all active:scale-98"
                   >
-                    Change
+                    <span>
+                      {amount
+                        ? `${language === 'kn' ? `₹${amount} ಪಾವತಿಸಲು ಮುಂದುವರಿಯಿರಿ` : language === 'hi' ? `₹${amount} भुगतान करने के लिए आगे बढ़ें` : language === 'te' ? `₹${amount} చెల్లించడానికి కొనసాగండి` : `Continue to Review & Pay ₹${amount}`} ➡️`
+                        : `${language === 'kn' ? 'ಮುಂದಿನ ಹಂತ: ಮೊತ್ತ ನಮೂದಿಸಿ' : language === 'hi' ? 'अगला चरण: राशि डालें' : language === 'te' ? 'తదుపరి దశ: మొత్తం నమోదు చేయండి' : 'Continue: Enter Amount'} ➡️`}
+                    </span>
+                    <ArrowRight className="w-5 h-5" />
                   </button>
                 </div>
               )}

@@ -75,14 +75,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     localStorage.setItem('aasara_fontsize', fontSize);
   }, [fontSize]);
 
-  // Sync theme
+  // Sync theme to root html and body elements
   useEffect(() => {
+    const isLight = themeMode === 'light';
+    document.documentElement.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast');
     document.body.classList.remove('theme-dark', 'theme-light', 'theme-high-contrast');
-    if (themeMode === 'light') {
+
+    if (isLight) {
+      document.documentElement.classList.add('theme-light');
       document.body.classList.add('theme-light');
-    } else if (themeMode === 'contrast') {
-      document.body.classList.add('theme-high-contrast');
     } else {
+      document.documentElement.classList.add('theme-dark');
       document.body.classList.add('theme-dark');
     }
     localStorage.setItem('aasara_theme', themeMode);
@@ -102,7 +105,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   const toggleTheme = () => {
-    setThemeModeState((prev) => (prev === 'dark' ? 'light' : prev === 'light' ? 'contrast' : 'dark'));
+    setThemeModeState((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   const setShowOnboarding = (show: boolean) => {

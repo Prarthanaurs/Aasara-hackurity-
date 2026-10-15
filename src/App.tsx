@@ -60,7 +60,7 @@ const MainApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1c110a] text-amber-50 flex flex-col justify-between selection:bg-orange-500 selection:text-white transition-colors duration-300">
+    <div className="app-root-container min-h-screen bg-[#1c110a] text-amber-50 flex flex-col justify-between selection:bg-orange-500 selection:text-white transition-colors duration-300">
       <div>
         <Navbar currentTab={activeTab} onTabChange={setActiveTab} />
 

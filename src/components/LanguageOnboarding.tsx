@@ -83,15 +83,13 @@ export const LanguageOnboarding: React.FC = () => {
       </div>
 
       <div className="max-w-4xl mx-auto w-full space-y-8 my-auto text-center">
-        {/* Header with uploaded logo (contains emblem and title) */}
+        {/* Header with uploaded transparent logo (contains emblem and title) */}
         <div className="space-y-4 flex flex-col items-center">
-          <div className="bg-white/95 rounded-3xl px-6 py-3 shadow-2xl border-2 border-amber-500/50 flex items-center justify-center inline-block">
-            <img
-              src="/aasara-logo.png"
-              alt="Aasara"
-              className="h-20 sm:h-28 w-auto object-contain max-w-full"
-            />
-          </div>
+          <img
+            src="/aasara-logo.png"
+            alt="Aasara"
+            className="h-20 sm:h-28 w-auto object-contain max-w-full drop-shadow-lg"
+          />
           <p className="text-base sm:text-xl font-semibold text-stone-300 max-w-xl">
             {t.tagline[language]}
           </p>

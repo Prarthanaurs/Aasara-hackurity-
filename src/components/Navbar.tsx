@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
   const currentLangObj = languages.find((l) => l.code === language) || languages[0];
 
   return (
-    <header className="sticky top-0 z-50 bg-[#1f140e]/95 backdrop-blur border-b border-amber-900/40 shadow-md">
+    <header className="sticky top-0 z-50 app-navbar bg-[#1f140e]/95 backdrop-blur border-b border-amber-900/40 shadow-md transition-colors duration-300">
       {/* Top 1930 Emergency Strip */}
       <div className="bg-[#991b1b] text-white px-4 py-1.5 flex items-center justify-between text-xs sm:text-sm font-bold">
         <a
@@ -77,13 +77,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
           className="flex items-center cursor-pointer group select-none"
           title="Aasara Home"
         >
-          <div className="bg-white/95 dark:bg-white/95 rounded-2xl px-2.5 py-1 border border-amber-500/40 shadow-md group-hover:scale-105 transition-transform flex items-center">
-            <img
-              src="/aasara-logo.png"
-              alt="Aasara"
-              className="h-9 sm:h-11 w-auto object-contain"
-            />
-          </div>
+          <img
+            src="/aasara-logo.png"
+            alt="Aasara"
+            className="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform"
+          />
         </div>
 
         {/* Desktop Navigation Links */}
